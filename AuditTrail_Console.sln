@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditTrail_Console", "AuditTrail_Console\AuditTrail_Console.csproj", "{8B5F7510-BA44-46BC-A44B-BF2DB44A05CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B5F7510-BA44-46BC-A44B-BF2DB44A05CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B5F7510-BA44-46BC-A44B-BF2DB44A05CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B5F7510-BA44-46BC-A44B-BF2DB44A05CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B5F7510-BA44-46BC-A44B-BF2DB44A05CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A32824E9-1BA0-429C-AC31-1A2EDCF44BF3}
+	EndGlobalSection
+EndGlobal
