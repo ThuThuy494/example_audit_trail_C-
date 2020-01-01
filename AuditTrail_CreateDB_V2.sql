@@ -1,6 +1,13 @@
 CREATE DATABASE EntityFrameworkPlus
 GO
 USE EntityFrameworkPlus
+Create Table Persons(
+      [Id] [uniqueidentifier] NOT NULL Primary Key,
+	  [FirstName] [nvarchar](150) NOT NULL,
+	  [LastName] [nvarchar](150) NOT NULL,
+	  [CreatedDate] [datetime] NOT NULL,
+	  [UpdateDate] [datetime] NOT NULL
+)
 CREATE TABLE [dbo].[AuditEntries] (
     [AuditEntryID] [int] NOT NULL IDENTITY,
     [EntitySetName] [nvarchar](255),
@@ -9,6 +16,7 @@ CREATE TABLE [dbo].[AuditEntries] (
     [StateName] [nvarchar](255),
     [CreatedBy] [nvarchar](255),
     [CreatedDate] [datetime] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL
     CONSTRAINT [PK_dbo.AuditEntries] PRIMARY KEY ([AuditEntryID])
 )
 
@@ -21,6 +29,8 @@ CREATE TABLE [dbo].[AuditEntryProperties] (
     [PropertyName] [nvarchar](255),
     [OldValue] [nvarchar](max),
     [NewValue] [nvarchar](max),
+	[CreatedDate] [datetime] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL
     CONSTRAINT [PK_dbo.AuditEntryProperties] PRIMARY KEY ([AuditEntryPropertyID])
 )
 
@@ -36,4 +46,32 @@ FOREIGN KEY ([AuditEntryID])
 REFERENCES [dbo].[AuditEntries] ([AuditEntryID])
 ON DELETE CASCADE
 
+GO
+CREATE TABLE [dbo].[HistoryTrackingAudit](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	[RecordId] [uniqueidentifier] NOT NULL,
+	[RecordType] [nvarchar](max) NOT NULL,
+	[ObjectName] [nvarchar](max) NULL,
+	[SubObjectName] [nvarchar](max) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[InsertedById] [uniqueidentifier] NOT NULL,
+	[InsertedAt] [datetime] NOT NULL,
+	[UpdatedById] [uniqueidentifier] NOT NULL,
+	[UpdatedAt] [datetime] NOT NULL
+)
+
+CREATE TABLE [dbo].[HistoryTrackingValueAudit](
+	[Id] [uniqueidentifier] NOT NULL PRIMARY KEY,
+	[ColumnName] [nvarchar](max) NOT NULL,
+	[OldValue] [nvarchar](max) NULL,
+	[NewValue] [nvarchar](max) NULL,
+	[Action] [nvarchar](max) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[InsertedById] [uniqueidentifier] NOT NULL,
+	[InsertedAt] [datetime] NOT NULL,
+	[UpdatedById] [uniqueidentifier] NOT NULL,
+	[UpdatedAt] [datetime] NOT NULL,
+	[HistoryTrackingId] [uniqueidentifier] NOT NULL
+	FOREIGN KEY([HistoryTrackingId]) REFERENCES [HistoryTrackingAudit](Id)
+)
 GO

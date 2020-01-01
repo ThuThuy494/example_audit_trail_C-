@@ -12,7 +12,7 @@
 //
 // The following connection settings were used to generate this file:
 //     Connection String Name: "AuditTrailDbContext"
-//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=ExampleAuditTrail;User Id=sa; password=**zapped**;"
+//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=EntityFrameworkPlus;User Id=sa; password=**zapped**;"
 // ------------------------------------------------------------------------------------------------
 // Database Edition       : Developer Edition (64-bit)
 // Database Engine Edition: Enterprise
@@ -60,8 +60,7 @@ namespace AuditTrail_Console
             Property(x => x.StateName).HasColumnName(@"StateName").HasColumnType("nvarchar").IsOptional().HasMaxLength(255);
             Property(x => x.CreatedBy).HasColumnName(@"CreatedBy").HasColumnType("nvarchar").IsOptional().HasMaxLength(255);
             Property(x => x.CreatedDate).HasColumnName(@"CreatedDate").HasColumnType("datetime").IsRequired();
-            Property(x => x.UpdateBy).HasColumnName(@"UpdateBy").HasColumnType("nvarchar").IsOptional().HasMaxLength(255);
-            Property(x => x.UpdateDate).HasColumnName(@"UpdateDate").HasColumnType("datetime").IsOptional();
+            Property(x => x.UpdateDate).HasColumnName(@"UpdateDate").HasColumnType("datetime").IsRequired();
         }
     }
 

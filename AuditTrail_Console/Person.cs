@@ -12,7 +12,7 @@
 //
 // The following connection settings were used to generate this file:
 //     Connection String Name: "AuditTrailDbContext"
-//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=ExampleAuditTrail;User Id=sa; password=**zapped**;"
+//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=EntityFrameworkPlus;User Id=sa; password=**zapped**;"
 // ------------------------------------------------------------------------------------------------
 // Database Edition       : Developer Edition (64-bit)
 // Database Engine Edition: Enterprise
@@ -48,20 +48,8 @@ namespace AuditTrail_Console
         public Guid Id { get; set; } // Id (Primary key)
         public string FirstName { get; set; } // FirstName (length: 150)
         public string LastName { get; set; } // LastName (length: 150)
-        public DateTime? CreateDate { get; set; } // CreateDate
-        public DateTime? UpdateDate { get; set; } // UpdateDate
-
-        // Reverse navigation
-
-        /// <summary>
-        /// Child AuditLogs where [AuditLog].[UserId] point to this entity (FK__AuditLog__UserId__398D8EEE)
-        /// </summary>
-        public virtual ICollection<AuditLog> AuditLogs { get; set; } // AuditLog.FK__AuditLog__UserId__398D8EEE
-
-        public Person()
-        {
-            AuditLogs = new List<AuditLog>();
-        }
+        public DateTime CreatedDate { get; set; } // CreatedDate
+        public DateTime UpdateDate { get; set; } // UpdateDate
     }
 
 }

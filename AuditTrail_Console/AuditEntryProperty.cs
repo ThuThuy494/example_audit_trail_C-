@@ -12,7 +12,7 @@
 //
 // The following connection settings were used to generate this file:
 //     Connection String Name: "AuditTrailDbContext"
-//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=ExampleAuditTrail;User Id=sa; password=**zapped**;"
+//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=EntityFrameworkPlus;User Id=sa; password=**zapped**;"
 // ------------------------------------------------------------------------------------------------
 // Database Edition       : Developer Edition (64-bit)
 // Database Engine Edition: Enterprise
@@ -51,8 +51,8 @@ namespace AuditTrail_Console
         public string PropertyName { get; set; } // PropertyName (length: 255)
         public string OldValue { get; set; } // OldValue
         public string NewValue { get; set; } // NewValue
-        public DateTime? CreateDate { get; set; } // CreateDate
-        public DateTime? UpdateDate { get; set; } // UpdateDate
+        public DateTime CreatedDate { get; set; } // CreatedDate
+        public DateTime UpdateDate { get; set; } // UpdateDate
 
         // Foreign keys
 

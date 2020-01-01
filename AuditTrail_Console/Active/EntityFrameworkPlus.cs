@@ -20,7 +20,7 @@ namespace AuditTrail_Console.Active
                 Id = Guid.NewGuid(),
                 FirstName = "Nine Tailed " + name + number,
                 LastName = "Fox " + name + number,
-                CreateDate = DateTime.Now,
+                CreatedDate = DateTime.Now,
                 UpdateDate = DateTime.Now
             };
             var json = new JavaScriptSerializer().Serialize(entity);

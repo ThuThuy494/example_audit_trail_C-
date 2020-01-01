@@ -12,7 +12,7 @@
 //
 // The following connection settings were used to generate this file:
 //     Connection String Name: "AuditTrailDbContext"
-//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=ExampleAuditTrail;User Id=sa; password=**zapped**;"
+//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=EntityFrameworkPlus;User Id=sa; password=**zapped**;"
 // ------------------------------------------------------------------------------------------------
 // Database Edition       : Developer Edition (64-bit)
 // Database Engine Edition: Enterprise
@@ -49,7 +49,8 @@ namespace AuditTrail_Console
     {
         DbSet<AuditEntry> AuditEntries { get; set; } // AuditEntries
         DbSet<AuditEntryProperty> AuditEntryProperties { get; set; } // AuditEntryProperties
-        DbSet<AuditLog> AuditLogs { get; set; } // AuditLog
+        DbSet<HistoryTrackingAudit> HistoryTrackingAudits { get; set; } // HistoryTrackingAudit
+        DbSet<HistoryTrackingValueAudit> HistoryTrackingValueAudits { get; set; } // HistoryTrackingValueAudit
         DbSet<Person> People { get; set; } // Persons
 
         int SaveChanges();

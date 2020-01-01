@@ -12,7 +12,7 @@
 //
 // The following connection settings were used to generate this file:
 //     Connection String Name: "AuditTrailDbContext"
-//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=ExampleAuditTrail;User Id=sa; password=**zapped**;"
+//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=EntityFrameworkPlus;User Id=sa; password=**zapped**;"
 // ------------------------------------------------------------------------------------------------
 // Database Edition       : Developer Edition (64-bit)
 // Database Engine Edition: Enterprise
@@ -57,7 +57,8 @@ namespace AuditTrail_Console
     {
         public DbSet<AuditEntry> AuditEntries { get; set; } // AuditEntries
         public DbSet<AuditEntryProperty> AuditEntryProperties { get; set; } // AuditEntryProperties
-        public DbSet<AuditLog> AuditLogs { get; set; } // AuditLog
+        public DbSet<HistoryTrackingAudit> HistoryTrackingAudits { get; set; } // HistoryTrackingAudit
+        public DbSet<HistoryTrackingValueAudit> HistoryTrackingValueAudits { get; set; } // HistoryTrackingValueAudit
         public DbSet<Person> People { get; set; } // Persons
 
         public FakeAuditTrailDbContext()
@@ -68,7 +69,8 @@ namespace AuditTrail_Console
 
             AuditEntries = new FakeDbSet<AuditEntry>("AuditEntryId");
             AuditEntryProperties = new FakeDbSet<AuditEntryProperty>("AuditEntryPropertyId");
-            AuditLogs = new FakeDbSet<AuditLog>("Id");
+            HistoryTrackingAudits = new FakeDbSet<HistoryTrackingAudit>("Id");
+            HistoryTrackingValueAudits = new FakeDbSet<HistoryTrackingValueAudit>("Id");
             People = new FakeDbSet<Person>("Id");
 
         }

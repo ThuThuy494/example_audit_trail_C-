@@ -20,7 +20,7 @@ namespace AuditTrail_Console.Active
                 Id = Guid.NewGuid(),
                 FirstName = "Yuki " + name + number,
                 LastName = "Yuki " + name + number,
-                CreateDate = DateTime.Now,
+                CreatedDate = DateTime.Now,
                 UpdateDate = DateTime.Now
             };
 

@@ -170,13 +170,7 @@
     <Compile Include="AuditEntryPropertyConfiguration.cs">
       <DependentUpon>DbAuditTrail.tt</DependentUpon>
     </Compile>
-    <Compile Include="AuditLog.cs">
-      <DependentUpon>DbAuditTrail.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AuditLogConfiguration.cs">
-      <DependentUpon>DbAuditTrail.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AuditTraiEFlDbContext.cs" />
+    <Compile Include="AuditTraiEFPlusDbContext.cs" />
     <Compile Include="AuditTrailDbContext.cs">
       <DependentUpon>DbAuditTrail.tt</DependentUpon>
     </Compile>
@@ -194,6 +188,22 @@
     <Compile Include="FakeDbSet.cs">
       <DependentUpon>DbAuditTrail.tt</DependentUpon>
     </Compile>
+    <Compile Include="HistoryTrackingAudit.cs">
+      <DependentUpon>DbAuditTrail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryTrackingAuditConfiguration.cs">
+      <DependentUpon>DbAuditTrail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryTrackingValueAudit.cs">
+      <DependentUpon>DbAuditTrail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryTrackingValueAuditConfiguration.cs">
+      <DependentUpon>DbAuditTrail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryTracking\IHistoryTracker.cs" />
+    <Compile Include="HistoryTracking\LoggerAttribute.cs" />
+    <Compile Include="HistoryTracking\RepositoryBaseImplementation.cs" />
+    <Compile Include="HistoryTracking\RepositoryImplementation.cs" />
     <Compile Include="IAuditTrailDbContext.cs">
       <DependentUpon>DbAuditTrail.tt</DependentUpon>
     </Compile>

@@ -13,7 +13,10 @@ namespace AuditTrail_Console.Infrastructure
         int SaveChanges(); Task<int> SaveChangesAsync();
         //IRepository<T> Repository<T>();
         IAuditTrailDbContext DataContext { get; }
-        IRepository<AuditLog> AuditLogRepository { get; }
         IRepository<Person> PersonRepository { get; }
+        IRepository<AuditEntry> AuditEntryRepository { get; }
+        IRepository<AuditEntryProperty> AuditEntryPropertyRepository { get; }
+        IRepository<HistoryTrackingAudit> HistoryTrackingAuditRepository { get; }
+        IRepository<HistoryTrackingValueAudit> HistoryTrackingValueAuditRepository { get; }
     }
 }

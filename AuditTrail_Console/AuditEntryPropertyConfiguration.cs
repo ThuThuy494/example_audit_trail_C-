@@ -12,7 +12,7 @@
 //
 // The following connection settings were used to generate this file:
 //     Connection String Name: "AuditTrailDbContext"
-//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=ExampleAuditTrail;User Id=sa; password=**zapped**;"
+//     Connection String:      "Data Source=NINE-TAILED-FOX;Initial Catalog=EntityFrameworkPlus;User Id=sa; password=**zapped**;"
 // ------------------------------------------------------------------------------------------------
 // Database Edition       : Developer Edition (64-bit)
 // Database Engine Edition: Enterprise
@@ -59,8 +59,8 @@ namespace AuditTrail_Console
             Property(x => x.PropertyName).HasColumnName(@"PropertyName").HasColumnType("nvarchar").IsOptional().HasMaxLength(255);
             Property(x => x.OldValue).HasColumnName(@"OldValue").HasColumnType("nvarchar(max)").IsOptional();
             Property(x => x.NewValue).HasColumnName(@"NewValue").HasColumnType("nvarchar(max)").IsOptional();
-            Property(x => x.CreateDate).HasColumnName(@"CreateDate").HasColumnType("datetime").IsOptional();
-            Property(x => x.UpdateDate).HasColumnName(@"UpdateDate").HasColumnType("datetime").IsOptional();
+            Property(x => x.CreatedDate).HasColumnName(@"CreatedDate").HasColumnType("datetime").IsRequired();
+            Property(x => x.UpdateDate).HasColumnName(@"UpdateDate").HasColumnType("datetime").IsRequired();
 
             // Foreign keys
             HasRequired(a => a.AuditEntry).WithMany(b => b.AuditEntryProperties).HasForeignKey(c => c.AuditEntryId); // FK_dbo.AuditEntryProperties_dbo.AuditEntries_AuditEntryID

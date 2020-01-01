@@ -21,17 +21,6 @@ namespace AuditTrail_Console.Infrastructure
             get { return _dbContext; }
         }
 
-        private IRepository<AuditLog> _auditLogRepo;
-        public IRepository<AuditLog> AuditLogRepository
-        {
-            get
-            {
-                if (_auditLogRepo == null)
-                    _auditLogRepo = new Repository<AuditLog>(_dbContext);
-                return _auditLogRepo;
-            }
-        }
-
         private IRepository<Person> _personRepo;
         public IRepository<Person> PersonRepository
         {
@@ -40,6 +29,50 @@ namespace AuditTrail_Console.Infrastructure
                 if (_personRepo == null)
                     _personRepo = new Repository<Person>(_dbContext);
                 return _personRepo;
+            }
+        }
+
+        private IRepository<AuditEntry> _auditEntryRepo;
+        public IRepository<AuditEntry> AuditEntryRepository
+        {
+            get
+            {
+                if (_auditEntryRepo == null)
+                    _auditEntryRepo = new Repository<AuditEntry>(_dbContext);
+                return _auditEntryRepo;
+            }
+        }
+
+        private IRepository<AuditEntryProperty> _auditEntryPropertyRepo;
+        public IRepository<AuditEntryProperty> AuditEntryPropertyRepository
+        {
+            get
+            {
+                if (_auditEntryPropertyRepo == null)
+                    _auditEntryPropertyRepo = new Repository<AuditEntryProperty>(_dbContext);
+                return _auditEntryPropertyRepo;
+            }
+        }
+
+        private IRepository<HistoryTrackingAudit> _historyTrackingAuditRepo;
+        public IRepository<HistoryTrackingAudit> HistoryTrackingAuditRepository
+        {
+            get
+            {
+                if (_historyTrackingAuditRepo == null)
+                    _historyTrackingAuditRepo = new Repository<HistoryTrackingAudit>(_dbContext);
+                return _historyTrackingAuditRepo;
+            }
+        }
+
+        private IRepository<HistoryTrackingValueAudit> _historyTrackingValueAuditRepo;
+        public IRepository<HistoryTrackingValueAudit> HistoryTrackingValueAuditRepository
+        {
+            get
+            {
+                if (_historyTrackingValueAuditRepo == null)
+                    _historyTrackingValueAuditRepo = new Repository<HistoryTrackingValueAudit>(_dbContext);
+                return _historyTrackingValueAuditRepo;
             }
         }
 
