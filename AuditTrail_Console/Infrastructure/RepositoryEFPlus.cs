@@ -1,26 +1,21 @@
-﻿using AuditTrail_Console.HistoryTracking;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AuditTrail_Console.Infrastructure
 {
-    public class Repository<T> : IRepository<T>
-        where T : class
+    public class RepositoryEFPlus<T> : IRepositoryEFPlus<T> where T : class
     {
-        //public DbContext DataContext;
-         protected readonly AuditTrailDbContext DataContext;
-        protected readonly DbSet<T> Dbset;
-        public Repository(AuditTrailDbContext context)
+        public DbContext DataContext;
+        public DbSet<T> Dbset;
+        public RepositoryEFPlus(DbContext context)
         {
-            DataContext = context;
+            this.DataContext = context;
             Dbset = context.Set<T>();
-            context.LogHistoryTrackerEvent = LogHistoryTrackerEvent;
         }
         public void Add(T entity)
         {
@@ -104,36 +99,5 @@ namespace AuditTrail_Console.Infrastructure
         {
             throw new NotImplementedException();
         }
-
-        private void LogHistoryTrackerEvent(IEnumerable<DbEntityEntry> changedEntities)
-        {
-            //var baseImplementation = ResolveRepositoryBaseImplementation();
-            //if (baseImplementation == null) return;
-
-            var entities = changedEntities.Where(w => ObjectContext.GetObjectType(w.Entity.GetType()).GetInterfaces().Contains(typeof(IHistoryTracker)));
-
-            foreach (var entity in entities)
-            {
-                RepositoryImplementation.LogHistoryTracking(entity);
-            }
-
-            var dynamicEntites = changedEntities.Where(w => ObjectContext.GetObjectType(w.Entity.GetType()).GetInterfaces().Contains(typeof(IDynamicHistoryTracker)));
-
-            foreach (var entity in dynamicEntites)
-            {
-                RepositoryImplementation.LogDynamicHistoryTracking(entity);
-            }
-        }
-
-        /// <summary>
-        /// Resolves the repository base implementation.
-        /// </summary>
-        /// <returns></returns>
-        //private RepositoryBaseImplementation ResolveRepositoryBaseImplementation()
-        //{
-        //    if (DataContext.Container == null || !DataContext.Container.IsRegisteredWithKey<RepositoryBaseImplementation>(RepositoryCustomImplementation))
-        //        return null;
-        //    return DataContext.Container.ResolveNamed<RepositoryBaseImplementation>(RepositoryCustomImplementation);
-        //}
     }
 }

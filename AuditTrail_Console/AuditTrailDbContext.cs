@@ -54,8 +54,13 @@ using System.Threading.Tasks;
 
 namespace AuditTrail_Console
 {
+    public delegate void TableUpdated(IEnumerable<DbEntityEntry> entities);
+    public delegate void LogHistoryTracker(IEnumerable<DbEntityEntry> entities);
     public class AuditTrailDbContext : DbContext, IAuditTrailDbContext
     {
+        public TableUpdated TableUpdatedEvent;
+        public LogHistoryTracker LogHistoryTrackerEvent;
+
         public DbSet<AuditEntry> AuditEntries { get; set; } // AuditEntries
         public DbSet<AuditEntryProperty> AuditEntryProperties { get; set; } // AuditEntryProperties
         public DbSet<HistoryTrackingAudit> HistoryTrackingAudits { get; set; } // HistoryTrackingAudit
@@ -69,7 +74,7 @@ namespace AuditTrail_Console
 
         /// <inheritdoc />
         public AuditTrailDbContext()
-            : base("Name=AuditTrailDbContext")
+            : base("AuditTrailDbContext")
         {
         }
 

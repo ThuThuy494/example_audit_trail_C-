@@ -11,68 +11,68 @@ namespace AuditTrail_Console.Infrastructure
 {
     public class UnitOfWorkEFPlus : IUnitOfWorkEFPlus
     {
-        private readonly AuditTrailDbContext _dbContext;
+        private readonly AuditTraiEFPlusDbContext _dbContext;
 
         public UnitOfWorkEFPlus()
         {
-            _dbContext = new AuditTrailDbContext();
+            _dbContext = new AuditTraiEFPlusDbContext();
         }
         public IAuditTrailDbContext DataContext
         {
             get { return _dbContext; }
         }
 
-        private IRepository<Person> _personRepo;
-        public IRepository<Person> PersonRepository
+        private IRepositoryEFPlus<Person> _personRepo;
+        public IRepositoryEFPlus<Person> PersonRepository
         {
             get
             {
                 if (_personRepo == null)
-                    _personRepo = new Repository<Person>(_dbContext);
+                    _personRepo = new RepositoryEFPlus<Person>(_dbContext);
                 return _personRepo;
             }
         }
 
-        private IRepository<AuditEntry> _auditEntryRepo;
-        public IRepository<AuditEntry> AuditEntryRepository
+        private IRepositoryEFPlus<AuditEntry> _auditEntryRepo; 
+        public IRepositoryEFPlus<AuditEntry> AuditEntryRepository
         {
             get
             {
                 if (_auditEntryRepo == null)
-                    _auditEntryRepo = new Repository<AuditEntry>(_dbContext);
+                    _auditEntryRepo = new RepositoryEFPlus<AuditEntry>(_dbContext);
                 return _auditEntryRepo;
             }
         }
 
-        private IRepository<AuditEntryProperty> _auditEntryPropertyRepo;
-        public IRepository<AuditEntryProperty> AuditEntryPropertyRepository
+        private IRepositoryEFPlus<AuditEntryProperty> _auditEntryPropertyRepo;
+        public IRepositoryEFPlus<AuditEntryProperty> AuditEntryPropertyRepository
         {
             get
             {
                 if (_auditEntryPropertyRepo == null)
-                    _auditEntryPropertyRepo = new Repository<AuditEntryProperty>(_dbContext);
+                    _auditEntryPropertyRepo = new RepositoryEFPlus<AuditEntryProperty>(_dbContext);
                 return _auditEntryPropertyRepo;
             }
         }
 
-        private IRepository<HistoryTrackingAudit> _historyTrackingAuditRepo;
-        public IRepository<HistoryTrackingAudit> HistoryTrackingAuditRepository
+        private IRepositoryEFPlus<HistoryTrackingAudit> _historyTrackingAuditRepo;
+        public IRepositoryEFPlus<HistoryTrackingAudit> HistoryTrackingAuditRepository
         {
             get
             {
                 if (_historyTrackingAuditRepo == null)
-                    _historyTrackingAuditRepo = new Repository<HistoryTrackingAudit>(_dbContext);
+                    _historyTrackingAuditRepo = new RepositoryEFPlus<HistoryTrackingAudit>(_dbContext);
                 return _historyTrackingAuditRepo;
             }
         }
 
-        private IRepository<HistoryTrackingValueAudit> _historyTrackingValueAuditRepo;
-        public IRepository<HistoryTrackingValueAudit> HistoryTrackingValueAuditRepository
+        private IRepositoryEFPlus<HistoryTrackingValueAudit> _historyTrackingValueAuditRepo;
+        public IRepositoryEFPlus<HistoryTrackingValueAudit> HistoryTrackingValueAuditRepository
         {
             get
             {
                 if (_historyTrackingValueAuditRepo == null)
-                    _historyTrackingValueAuditRepo = new Repository<HistoryTrackingValueAudit>(_dbContext);
+                    _historyTrackingValueAuditRepo = new RepositoryEFPlus<HistoryTrackingValueAudit>(_dbContext);
                 return _historyTrackingValueAuditRepo;
             }
         }

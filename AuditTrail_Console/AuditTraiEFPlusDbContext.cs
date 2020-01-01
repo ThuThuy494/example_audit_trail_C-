@@ -15,13 +15,8 @@ using Z.EntityFramework.Plus;
 
 namespace AuditTrail_Console
 {
-    public delegate void TableUpdated(IEnumerable<DbEntityEntry> entities);
-    public delegate void LogHistoryTracker(IEnumerable<DbEntityEntry> entities);
     public class AuditTraiEFPlusDbContext : DbContext, IAuditTrailDbContext
     {
-        public TableUpdated TableUpdatedEvent;
-        public LogHistoryTracker LogHistoryTrackerEvent;
-
         public DbSet<AuditEntry> AuditEntries { get; set; } // AuditEntries
         public DbSet<AuditEntryProperty> AuditEntryProperties { get; set; } // AuditEntryProperties
         public DbSet<Person> People { get; set; } // Persons
@@ -31,6 +26,12 @@ namespace AuditTrail_Console
         static AuditTraiEFPlusDbContext()
         {
             System.Data.Entity.Database.SetInitializer<AuditTraiEFPlusDbContext>(null);
+            AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) =>
+            {
+                // ADD "Where(x => x.AuditEntryID == 0)" to allow multiple SaveChanges with same Audit
+                var customAuditEntries = audit.Entries.Select(x => Import(x));
+                (context as AuditTrailDbContext).AuditEntries.AddRange(customAuditEntries);
+            };
         }
 
         /// <inheritdoc />
@@ -131,6 +132,36 @@ namespace AuditTrail_Console
             modelBuilder.Configurations.Add(new PersonConfiguration(schema));
 
             return modelBuilder;
+        }
+
+        public static AuditEntry Import(Z.EntityFramework.Plus.AuditEntry entry)
+        {
+            var customAuditEntry = new AuditEntry
+            {
+                EntitySetName = entry.EntitySetName,
+                EntityTypeName = entry.EntityTypeName,
+                State = (int)entry.State,
+                StateName = entry.StateName,
+                CreatedBy = entry.CreatedBy,
+                CreatedDate = entry.CreatedDate
+            };
+
+            customAuditEntry.AuditEntryProperties = entry.Properties.Select(x => Import(x)).ToList();
+
+            return customAuditEntry;
+        }
+
+        public static AuditEntryProperty Import(Z.EntityFramework.Plus.AuditEntryProperty property)
+        {
+            var customAuditEntry = new AuditEntryProperty
+            {
+                RelationName = property.RelationName,
+                PropertyName = property.PropertyName,
+                OldValue = property.OldValueFormatted,
+                NewValue = property.NewValueFormatted
+            };
+
+            return customAuditEntry;
         }
     }
 }

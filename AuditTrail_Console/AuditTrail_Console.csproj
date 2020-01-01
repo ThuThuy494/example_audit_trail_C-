@@ -200,6 +200,8 @@
     <Compile Include="HistoryTrackingValueAuditConfiguration.cs">
       <DependentUpon>DbAuditTrail.tt</DependentUpon>
     </Compile>
+    <Compile Include="HistoryTracking\ForeignKeyLoggerAttribute.cs" />
+    <Compile Include="HistoryTracking\IDynamicHistoryTracker.cs" />
     <Compile Include="HistoryTracking\IHistoryTracker.cs" />
     <Compile Include="HistoryTracking\LoggerAttribute.cs" />
     <Compile Include="HistoryTracking\RepositoryBaseImplementation.cs" />
@@ -208,9 +210,11 @@
       <DependentUpon>DbAuditTrail.tt</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\IRepositoryEFPlus.cs" />
     <Compile Include="Infrastructure\IUnitOfWorkEFPlus.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\Repository.cs" />
+    <Compile Include="Infrastructure\RepositoryEFPlus.cs" />
     <Compile Include="Infrastructure\UnitOfWorkEFPlus.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Model\AuditLogModel.cs" />
