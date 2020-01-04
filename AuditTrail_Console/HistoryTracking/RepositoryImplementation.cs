@@ -12,25 +12,22 @@ using System.Threading.Tasks;
 
 namespace AuditTrail_Console.HistoryTracking
 {
-    public class RepositoryImplementation 
+    public class RepositoryImplementation
     {
-        private static IUnitOfWork _unitOfWork;
-        public RepositoryImplementation(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        private static UnitOfWork _unitOfWork = new UnitOfWork();
+
         #region Override Methods
 
         public static void LogHistoryTracking(DbEntityEntry entity)
         {
-            bool isLogged;
-            Guid? historyTrackingId;
+            var isLogged = false;
+            Guid? historyTrackingId = null;
 
-            if (entity.State == EntityState.Added || (entity.State == EntityState.Modified ))
+            if (entity.State == EntityState.Added)
             {
                 isLogged = LogHistoryTrackingForAddAndDelete(entity, out historyTrackingId);
             }
-            else
+            if (entity.State == EntityState.Modified)
             {
                 isLogged = LogHistoryTrackingForUpdate(entity, out historyTrackingId);
             }
@@ -56,17 +53,17 @@ namespace AuditTrail_Console.HistoryTracking
             //}
             //else
             //{
-                Guid? historyTrackingId;
-                var isLogged = LogDynamicHistoryTrackingForUpdate(entity, out historyTrackingId);
-                if (isLogged)
-                {
-                    _unitOfWork.SaveChanges();
-                }
-                else if (historyTrackingId.HasValue)
-                {
-                    _unitOfWork.HistoryTrackingAuditRepository.Delete(ht => ht.Id == historyTrackingId, true);
-                    _unitOfWork.SaveChanges();
-                }
+            Guid? historyTrackingId;
+            var isLogged = LogDynamicHistoryTrackingForUpdate(entity, out historyTrackingId);
+            if (isLogged)
+            {
+                _unitOfWork.SaveChanges();
+            }
+            else if (historyTrackingId.HasValue)
+            {
+                _unitOfWork.HistoryTrackingAuditRepository.Delete(ht => ht.Id == historyTrackingId, true);
+                _unitOfWork.SaveChanges();
+            }
             //}
         }
 
@@ -196,6 +193,7 @@ namespace AuditTrail_Console.HistoryTracking
 
             var historyTracking = new HistoryTrackingAudit
             {
+                Id = Guid.NewGuid(),
                 RecordId = Guid.NewGuid(),
                 RecordType = recordType,
                 ObjectName = objectName ?? string.Empty,

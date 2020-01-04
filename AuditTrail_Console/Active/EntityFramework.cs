@@ -9,10 +9,19 @@ using System.Web.Script.Serialization;
 
 namespace AuditTrail_Console.Active
 {
-    public class EntityFramework
+    public class EntityFramework : IEntityFramework
     {
-        private static readonly UnitOfWork _uow = new UnitOfWork();
-        public static void Demo_EntityFramework()
+        private readonly IUnitOfWork _uow;
+        public EntityFramework(IUnitOfWork uow)
+        {
+            _uow = uow;
+        }
+        public void Demo_EntityFramework()
+        {
+            Update();
+        }
+
+        private void Add()
         {
             var name = "EF ";
             var number = 1;
@@ -37,13 +46,21 @@ namespace AuditTrail_Console.Active
                 PersonId = entity.Id,
                 RoleName = "Demo",
                 CreatedDate = DateTime.Now,
-                UpdateDate= DateTime.Now
+                UpdateDate = DateTime.Now
             };
 
             var jsonPersonRole = new JavaScriptSerializer().Serialize(role);
             Console.WriteLine(jsonPersonRole);
             _uow.PersonRoleRepository.Add(role);
+            _uow.SaveChanges();
+        }
 
+        private void Update()
+        {
+            var id = Guid.Parse("43CFD131-F923-4117-810E-A7BEBA5822C6");
+            var entity = _uow.PersonRepository.GetById(id);
+            entity.FullName = "Thu Thuy";
+            _uow.PersonRepository.Update(entity);
             _uow.SaveChanges();
         }
     }

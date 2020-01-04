@@ -126,6 +126,7 @@ namespace AuditTrail_Console.Infrastructure
             }
         }
 
+
         /// <summary>
         /// Resolves the repository base implementation.
         /// </summary>

@@ -9,10 +9,10 @@ using System.Web.Script.Serialization;
 
 namespace AuditTrail_Console.Active
 {
-    public static class EntityFrameworkPlus
+    public class EntityFrameworkPlus
     {
-        private static readonly UnitOfWorkEFPlus _uow = new UnitOfWorkEFPlus();
-        public static void Demo_EntityFrameworkPlus()
+        private readonly UnitOfWorkEFPlus _uow = new UnitOfWorkEFPlus();
+        public void Demo_EntityFrameworkPlus()
         {
             var number = 1;
             var name = "EF Plus";

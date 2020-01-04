@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace AuditTrail_Console.Entity
 {
     [Logger("PersonDetail")]
-    public class PersonDetail
+    public class PersonDetail : IHistoryTracker
     {
-        [Logger("Id")]
+        [Logger(false)]
         public Guid Id { get; set; } // Id (Primary key)
         [Logger("PersonId", false)]
         [ForeignKeyLogger("Person", "FullName")]
@@ -28,5 +28,22 @@ namespace AuditTrail_Console.Entity
         /// Parent HistoryTrackingAudit pointed by [HistoryTrackingValueAudit].([HistoryTrackingId]) (FK__HistoryTr__Histo__403A8C7D)
         /// </summary>
         public virtual Person Person { get; set; } // FK__HistoryTr__Histo__403A8C7D
+
+        public string ObjectName
+        {
+            get
+            {
+                return Id.ToString();
+            }
+        }
+
+        public IHistoryTracker ParentObject
+        {
+            get
+            {
+                return Person;
+            }
+        }
+
     }
 }

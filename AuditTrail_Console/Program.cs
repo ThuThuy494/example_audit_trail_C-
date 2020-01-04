@@ -1,5 +1,7 @@
 ﻿using AuditTrail_Console.Active;
+using AuditTrail_Console.Infrastructure;
 using AuditTrail_Console.Run;
+using Autofac;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,8 +16,15 @@ namespace AuditTrail_Console
 {
     class Program
     {
+
         static void Main(string[] args)
         {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+            builder.RegisterType<EntityFramework>().As<IEntityFramework>();
+            builder.RegisterType<RunEntityFramework>().As<IRunEntityFramework>();
+            builder.Build();
+
             //Console.WriteLine("Start Example Insert Data use Entity Framework");
             //Stopwatch stopwatch = new Stopwatch();
             //stopwatch.Start();
@@ -63,8 +72,8 @@ namespace AuditTrail_Console
             //    }
             //}
 
-
-            RunEntityFramework.ActionRunEntityFramework();
+            
+            
             //Console.WriteLine("===================================");
             //RunEntityFrameworkPlus.ActionRunEntityFramworkPlus();
 

@@ -6,9 +6,9 @@ namespace AuditTrail_Console.Entity
 {
     // Persons
     [Logger("Person")]
-    public class Person
+    public class Person : IHistoryTracker
     {
-        [Logger("Id")]
+        [Logger(false)]
         public Guid Id { get; set; } // Id (Primary key)
         [Logger("FirstName")]
         public string FirstName { get; set; } // FirstName (length: 150)
@@ -27,6 +27,22 @@ namespace AuditTrail_Console.Entity
         /// Child HistoryTrackingValueAudits where [HistoryTrackingValueAudit].[HistoryTrackingId] point to this entity (FK__HistoryTr__Histo__403A8C7D)
         /// </summary>
         public virtual ICollection<PersonDetail> PersonDetails { get; set; } // HistoryTrackingValueAudit.FK__HistoryTr__Histo__403A8C7D
+
+        public string ObjectName
+        {
+            get
+            {
+                return Id.ToString();
+            }
+        }
+
+        public IHistoryTracker ParentObject
+        {
+            get
+            {
+                return null;
+            }
+        }
 
         //public Person()
         //{

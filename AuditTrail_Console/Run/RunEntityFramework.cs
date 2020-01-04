@@ -8,16 +8,21 @@ using System.Threading.Tasks;
 
 namespace AuditTrail_Console.Run
 {
-    public static class RunEntityFramework
+    public class RunEntityFramework: IRunEntityFramework
     {
-        public static void ActionRunEntityFramework()
+        private readonly IEntityFramework _entityFramework;
+        public RunEntityFramework(IEntityFramework entityFramework)
+        {
+            _entityFramework = entityFramework;
+        }
+        public void ActionRunEntityFramework()
         {
             Console.WriteLine("Start Example Insert Data use Entity Framework");
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             Console.WriteLine("Time Start: " + DateTime.Now);
             //To do
-            EntityFramework.Demo_EntityFramework();
+            _entityFramework.Demo_EntityFramework();
             //To do
             stopwatch.Stop();
             TimeSpan timeSpan = stopwatch.Elapsed;
