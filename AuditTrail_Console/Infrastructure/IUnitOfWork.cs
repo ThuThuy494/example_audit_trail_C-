@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AuditTrail_Console.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace AuditTrail_Console.Infrastructure
         //IRepository<T> Repository<T>();
         IAuditTrailDbContext DataContext { get; }
         IRepository<Person> PersonRepository { get; }
+        IRepository<PersonDetail> PersonRoleRepository { get; }
         IRepository<AuditEntry> AuditEntryRepository { get; }
         IRepository<AuditEntryProperty> AuditEntryPropertyRepository { get; }
         IRepository<HistoryTrackingAudit> HistoryTrackingAuditRepository { get; }

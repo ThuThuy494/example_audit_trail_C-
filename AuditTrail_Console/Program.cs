@@ -66,7 +66,7 @@ namespace AuditTrail_Console
 
             RunEntityFramework.ActionRunEntityFramework();
             //Console.WriteLine("===================================");
-            RunEntityFrameworkPlus.ActionRunEntityFramworkPlus();
+            //RunEntityFrameworkPlus.ActionRunEntityFramworkPlus();
 
             Console.ReadLine();
         }

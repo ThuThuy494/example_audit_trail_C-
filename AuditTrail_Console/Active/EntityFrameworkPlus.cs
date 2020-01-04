@@ -1,4 +1,5 @@
-﻿using AuditTrail_Console.Infrastructure;
+﻿using AuditTrail_Console.Entity;
+using AuditTrail_Console.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;

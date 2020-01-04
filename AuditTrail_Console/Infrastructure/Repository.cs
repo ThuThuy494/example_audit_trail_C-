@@ -1,4 +1,5 @@
-﻿using AuditTrail_Console.HistoryTracking;
+﻿using AuditTrail_Console.Entity;
+using AuditTrail_Console.HistoryTracking;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,8 +15,8 @@ namespace AuditTrail_Console.Infrastructure
         where T : class
     {
         //public DbContext DataContext;
-         protected readonly AuditTrailDbContext DataContext;
-        protected readonly DbSet<T> Dbset;
+        public readonly AuditTrailDbContext DataContext;
+        public readonly DbSet<T> Dbset;
         public Repository(AuditTrailDbContext context)
         {
             DataContext = context;

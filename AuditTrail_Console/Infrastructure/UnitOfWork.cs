@@ -1,6 +1,10 @@
-﻿using System;
+﻿using AuditTrail_Console.Entity;
+using AuditTrail_Console.HistoryTracking;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
@@ -29,6 +33,17 @@ namespace AuditTrail_Console.Infrastructure
                 if (_personRepo == null)
                     _personRepo = new Repository<Person>(_dbContext);
                 return _personRepo;
+            }
+        }
+
+        private IRepository<PersonDetail> _personRoleRepo;
+        public IRepository<PersonDetail> PersonRoleRepository
+        {
+            get
+            {
+                if (_personRoleRepo == null)
+                    _personRoleRepo = new Repository<PersonDetail>(_dbContext);
+                return _personRoleRepo;
             }
         }
 
@@ -90,7 +105,7 @@ namespace AuditTrail_Console.Infrastructure
         {
             try
             {
-                var entries = _dbContext.ChangeTracker.Entries();
+                var entries = SaveChangeDetail();
                 foreach (var e in entries)
                 {
                     var entity = e.Entity;
@@ -116,7 +131,7 @@ namespace AuditTrail_Console.Infrastructure
         {
             try
             {
-                var entries = _dbContext.ChangeTracker.Entries();
+                var entries = SaveChangeDetail();
                 foreach (var e in entries)
                 {
                     var entity = e.Entity;
@@ -141,6 +156,38 @@ namespace AuditTrail_Console.Infrastructure
         public void SetDetachChanges(bool value)
         {
             _dbContext.Configuration.AutoDetectChangesEnabled = value;
+        }
+
+        private List<DbEntityEntry> SaveChangeDetail()
+        {
+            var changedEntities = _dbContext.ChangeTracker.Entries().ToList();
+            // Maybe clear cache for unchanged entites I don't filter unchange
+            //if (TableUpdatedEvent != null) TableUpdatedEvent(changedEntities);
+            // NO need log history, delete workflow for unchange entities
+            changedEntities = changedEntities.Where(t => t.State != EntityState.Unchanged).ToList();
+
+            LogHistoryTrackerEvent(changedEntities);
+            return changedEntities;
+        }
+
+        private void LogHistoryTrackerEvent(IEnumerable<DbEntityEntry> changedEntities)
+        {
+            //var baseImplementation = ResolveRepositoryBaseImplementation();
+            //if (baseImplementation == null) return;
+
+            var entities = changedEntities.Where(w => ObjectContext.GetObjectType(w.Entity.GetType()).GetInterfaces().Contains(typeof(IHistoryTracker)));
+
+            foreach (var entity in entities)
+            {
+                RepositoryImplementation.LogHistoryTracking(entity);
+            }
+
+            var dynamicEntites = changedEntities.Where(w => ObjectContext.GetObjectType(w.Entity.GetType()).GetInterfaces().Contains(typeof(IDynamicHistoryTracker)));
+
+            foreach (var entity in dynamicEntites)
+            {
+                RepositoryImplementation.LogDynamicHistoryTracking(entity);
+            }
         }
     }
 }

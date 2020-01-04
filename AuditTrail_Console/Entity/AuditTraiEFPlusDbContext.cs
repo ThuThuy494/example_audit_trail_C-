@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
 
-namespace AuditTrail_Console
+namespace AuditTrail_Console.Entity
 {
     public class AuditTraiEFPlusDbContext : DbContext, IAuditTrailDbContext
     {
@@ -22,6 +22,7 @@ namespace AuditTrail_Console
         public DbSet<Person> People { get; set; } // Persons
         public DbSet<HistoryTrackingAudit> HistoryTrackingAudits { get; set; }
         public DbSet<HistoryTrackingValueAudit> HistoryTrackingValueAudits { get; set; }
+        public DbSet<PersonDetail> PersonDetails { get; set; }
 
         static AuditTraiEFPlusDbContext()
         {
@@ -36,7 +37,7 @@ namespace AuditTrail_Console
 
         /// <inheritdoc />
         public AuditTraiEFPlusDbContext()
-            : base("Name=AuditTraiEFlDbContext")
+            : base("AuditTraiEFlDbContext")
         {
         }
 
@@ -91,38 +92,7 @@ namespace AuditTrail_Console
             modelBuilder.Configurations.Add(new AuditEntryConfiguration());
             modelBuilder.Configurations.Add(new AuditEntryPropertyConfiguration());
             modelBuilder.Configurations.Add(new PersonConfiguration());
-
-            // Indexes        
-            modelBuilder.Entity<AuditEntry>()
-                .Property(e => e.AuditEntryId)
-                .HasColumnAnnotation(
-                    IndexAnnotation.AnnotationName,
-                    new IndexAnnotation(new IndexAttribute("PK_dbo.AuditEntries", 1) { IsUnique = true, IsClustered = true })
-                );
-
-
-            modelBuilder.Entity<AuditEntryProperty>()
-                .Property(e => e.AuditEntryPropertyId)
-                .HasColumnAnnotation(
-                    IndexAnnotation.AnnotationName,
-                    new IndexAnnotation(new IndexAttribute("PK_dbo.AuditEntryProperties", 1) { IsUnique = true, IsClustered = true })
-                );
-
-
-            modelBuilder.Entity<AuditEntryProperty>()
-                .Property(e => e.AuditEntryId)
-                .HasColumnAnnotation(
-                    IndexAnnotation.AnnotationName,
-                    new IndexAnnotation(new IndexAttribute("IX_AuditEntryID", 1))
-                );
-
-            modelBuilder.Entity<Person>()
-                .Property(e => e.Id)
-                .HasColumnAnnotation(
-                    IndexAnnotation.AnnotationName,
-                    new IndexAnnotation(new IndexAttribute("PK__Persons__3214EC07B1B20D6A", 1) { IsUnique = true, IsClustered = true })
-                );
-
+            modelBuilder.Configurations.Add(new PersonDetailConfiguration());
         }
 
         public static DbModelBuilder CreateModel(DbModelBuilder modelBuilder, string schema)
@@ -130,6 +100,7 @@ namespace AuditTrail_Console
             modelBuilder.Configurations.Add(new AuditEntryConfiguration(schema));
             modelBuilder.Configurations.Add(new AuditEntryPropertyConfiguration(schema));
             modelBuilder.Configurations.Add(new PersonConfiguration(schema));
+            modelBuilder.Configurations.Add(new PersonDetailConfiguration(schema));
 
             return modelBuilder;
         }

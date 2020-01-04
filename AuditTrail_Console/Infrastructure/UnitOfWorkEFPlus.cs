@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AuditTrail_Console.Entity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -33,24 +34,24 @@ namespace AuditTrail_Console.Infrastructure
             }
         }
 
-        private IRepositoryEFPlus<AuditEntry> _auditEntryRepo; 
-        public IRepositoryEFPlus<AuditEntry> AuditEntryRepository
+        private IRepositoryEFPlus<Entity.AuditEntry> _auditEntryRepo; 
+        public IRepositoryEFPlus<Entity.AuditEntry> AuditEntryRepository
         {
             get
             {
                 if (_auditEntryRepo == null)
-                    _auditEntryRepo = new RepositoryEFPlus<AuditEntry>(_dbContext);
+                    _auditEntryRepo = new RepositoryEFPlus<Entity.AuditEntry>(_dbContext);
                 return _auditEntryRepo;
             }
         }
 
-        private IRepositoryEFPlus<AuditEntryProperty> _auditEntryPropertyRepo;
-        public IRepositoryEFPlus<AuditEntryProperty> AuditEntryPropertyRepository
+        private IRepositoryEFPlus<Entity.AuditEntryProperty> _auditEntryPropertyRepo;
+        public IRepositoryEFPlus<Entity.AuditEntryProperty> AuditEntryPropertyRepository
         {
             get
             {
                 if (_auditEntryPropertyRepo == null)
-                    _auditEntryPropertyRepo = new RepositoryEFPlus<AuditEntryProperty>(_dbContext);
+                    _auditEntryPropertyRepo = new RepositoryEFPlus<Entity.AuditEntryProperty>(_dbContext);
                 return _auditEntryPropertyRepo;
             }
         }
@@ -74,6 +75,17 @@ namespace AuditTrail_Console.Infrastructure
                 if (_historyTrackingValueAuditRepo == null)
                     _historyTrackingValueAuditRepo = new RepositoryEFPlus<HistoryTrackingValueAudit>(_dbContext);
                 return _historyTrackingValueAuditRepo;
+            }
+        }
+
+        private IRepositoryEFPlus<PersonDetail> _personDetailRepo;
+        public IRepositoryEFPlus<PersonDetail> PersonDetailsRepository
+        {
+            get
+            {
+                if (_personDetailRepo == null)
+                    _personDetailRepo = new RepositoryEFPlus<PersonDetail>(_dbContext);
+                return _personDetailRepo;
             }
         }
 
