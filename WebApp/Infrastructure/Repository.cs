@@ -18,14 +18,17 @@ namespace WebApp.Infrastructure
         //public DbContext DataContext;
         public readonly AuditTrailDbContext DataContext;
         public readonly DbSet<T> Dbset;
+        public readonly IComponentContext componentContext;
 
         private const string RepositoryCustomImplementation = "AuditTrail_Console.HistoryTracking";
 
-        public Repository(AuditTrailDbContext context)
+        public Repository(AuditTrailDbContext context, IComponentContext _componentContext)
         {
             DataContext = context;
+            this.componentContext = _componentContext;
             Dbset = context.Set<T>();
             context.LogHistoryTrackerEvent = LogHistoryTrackerEvent;
+            DataContext.Container = componentContext;
         }
         public void Add(T entity)
         {
@@ -114,7 +117,7 @@ namespace WebApp.Infrastructure
         {
             var baseImplementation = ResolveRepositoryBaseImplementation();
             if (baseImplementation == null) return;
-
+            var a = componentContext.Resolve<RepositoryBaseImplementation>();
             var entities = changedEntities.Where(w => ObjectContext.GetObjectType(w.Entity.GetType()).GetInterfaces().Contains(typeof(IHistoryTracker)));
 
             foreach (var entity in entities)
@@ -137,9 +140,9 @@ namespace WebApp.Infrastructure
         /// <returns></returns>
         private RepositoryBaseImplementation ResolveRepositoryBaseImplementation()
         {
-            if (DataContext.Container == null || !DataContext.Container.IsRegisteredWithKey<RepositoryBaseImplementation>(RepositoryCustomImplementation))
+            if (DataContext.Container == null || !DataContext.Container.IsRegisteredWithKey<RepositoryBaseImplementation>("WebApp.HistoryTracking"))
                 return null;
-            return DataContext.Container.ResolveNamed<RepositoryBaseImplementation>(RepositoryCustomImplementation);
+            return DataContext.Container.ResolveNamed<RepositoryBaseImplementation>("WebApp.HistoryTracking");
         }
     }
 }

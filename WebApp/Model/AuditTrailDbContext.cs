@@ -9,6 +9,9 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using WebApp.Model.Entity;
 
 namespace WebApp.Model
@@ -104,6 +107,34 @@ namespace WebApp.Model
             modelBuilder.Configurations.Add(new PersonConfiguration(schema));
             modelBuilder.Configurations.Add(new PersonDetailConfiguration(schema));
             return modelBuilder;
+        }
+        public override int SaveChanges()
+        {
+            SaveChangeDetail();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync()
+        {
+            SaveChangeDetail();
+            return base.SaveChangesAsync();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            SaveChangeDetail();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void SaveChangeDetail()
+        {
+            var changedEntities = ChangeTracker.Entries().ToList();
+            // Maybe clear cache for unchanged entites I don't filter unchange
+            if (TableUpdatedEvent != null) TableUpdatedEvent(changedEntities);
+            // NO need log history, delete workflow for unchange entities
+            changedEntities = changedEntities.Where(t => t.State != EntityState.Unchanged).ToList();
+
+            if (LogHistoryTrackerEvent != null) LogHistoryTrackerEvent(changedEntities);
         }
     }
 }

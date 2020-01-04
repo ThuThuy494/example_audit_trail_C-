@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebApp.App_Start;
 
 namespace WebApp
 {
@@ -13,6 +14,7 @@ namespace WebApp
     {
         protected void Application_Start()
         {
+            AutofacWebapiConfig.Initialize(GlobalConfiguration.Configuration);
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

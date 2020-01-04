@@ -10,7 +10,7 @@ using WebApp.Model.Entity;
 
 namespace WebApp.HistoryTracking
 {
-    public class RepositoryImplementation
+    public class RepositoryImplementation: RepositoryBaseImplementation
     {
         private readonly IUnitOfWork _unitOfWork;
         public RepositoryImplementation(IUnitOfWork unitOfWork)
@@ -19,7 +19,7 @@ namespace WebApp.HistoryTracking
         }
         #region Override Methods
 
-        public void LogHistoryTracking(DbEntityEntry entity)
+        public override void LogHistoryTracking(DbEntityEntry entity)
         {
             var isLogged = false;
             Guid? historyTrackingId = null;
@@ -44,7 +44,7 @@ namespace WebApp.HistoryTracking
             }
         }
 
-        public void LogDynamicHistoryTracking(DbEntityEntry entity)
+        public override void LogDynamicHistoryTracking(DbEntityEntry entity)
         {
             //if (entity.State == EntityState.Added ||
             //    (entity.State == EntityState.Modified &&
