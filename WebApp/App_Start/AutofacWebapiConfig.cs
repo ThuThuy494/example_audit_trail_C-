@@ -26,13 +26,13 @@ namespace WebApp.App_Start
 
         private static IContainer RegisterServices(ContainerBuilder builder)
         {
-            builder.RegisterApiControllers(Assembly.GetEntryAssembly());  //Register your Web API controllers.
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());  //Register your Web API controllers.
             //Register your Web API controllers.  
-            builder.RegisterAssemblyTypes(Assembly.Load("AuditTrail_Console.HistoryTracking"))
+            builder.RegisterAssemblyTypes(Assembly.Load("WebApp"))
                 .As(typeof(RepositoryBaseImplementation))
                 .Keyed(k => k.FullName, typeof(RepositoryBaseImplementation))
                 .InstancePerRequest();
-
+            //IComponentContext componentContext
             //History
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>()
                .OnPreparing(p => p.Parameters = p.Parameters.Concat(new[] { new NamedParameter("container", null) }))
