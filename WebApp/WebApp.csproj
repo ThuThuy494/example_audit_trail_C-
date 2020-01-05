@@ -204,11 +204,19 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Core\ApiCommandProcessor.cs" />
+    <Compile Include="Core\ICommand.cs" />
+    <Compile Include="Core\ICommandHandler.cs" />
+    <Compile Include="Core\ICommandProcessor.cs" />
+    <Compile Include="Domain\Imp\BaseService.cs" />
     <Compile Include="Domain\IPersonService.cs" />
-    <Compile Include="Domain\PersonService.cs" />
+    <Compile Include="Domain\Imp\PersonService.cs" />
+    <Compile Include="ExceptionCustom\CommandHandlerNotFoundException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handler\BaseHandler.cs" />
+    <Compile Include="Handler\PersonHandler.cs" />
     <Compile Include="HistoryTracking\ForeignKeyLoggerAttribute.cs" />
     <Compile Include="HistoryTracking\IDynamicHistoryTracker.cs" />
     <Compile Include="HistoryTracking\IHistoryTracker.cs" />
@@ -246,6 +254,7 @@
     <Compile Include="Model\FakeAuditTrailDbContext.cs" />
     <Compile Include="Model\FakeDbSet.cs" />
     <Compile Include="Model\IAuditTrailDbContext.cs" />
+    <Compile Include="Command\PersonCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\PersonModel.cs" />
   </ItemGroup>
