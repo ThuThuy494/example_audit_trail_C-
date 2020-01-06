@@ -13,9 +13,7 @@ namespace WebApp.Model.Entity
         public Guid PersonId { get; set; } // PersonId (length: 150)
         [Logger("RoleName")]
         public string RoleName { get; set; } // RoleName (length: 150)
-        [Logger("CreatedDate")]
         public DateTime CreatedDate { get; set; } // CreatedDate
-        [Logger("UpdateDate")]
         public DateTime UpdateDate { get; set; } // UpdateDate
 
         // Foreign keys

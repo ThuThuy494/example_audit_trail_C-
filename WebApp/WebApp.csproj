@@ -229,16 +229,16 @@
     <Compile Include="HistoryTracking\IHistoryTracker.cs" />
     <Compile Include="HistoryTracking\LoggerAttribute.cs" />
     <Compile Include="HistoryTracking\RepositoryBaseImplementation.cs" />
-    <Compile Include="HistoryTracking\RepositoryImplementation.cs" />
+    <Compile Include="RepositoryImplementation\RepositoryImplementation.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IRepositoryEFPlus.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
-    <Compile Include="Infrastructure\IUnitOfWorkEFPlus.cs" />
+    <Compile Include="Infrastructure\IUnitOfWorkHistoryTracking.cs" />
     <Compile Include="Infrastructure\Repository.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryEFPlus.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Infrastructure\UnitOfWorkEFPlus.cs" />
+    <Compile Include="Infrastructure\UnitOfWorkHistoryTracking.cs" />
     <Compile Include="Migrations\202001040956024_initialCreate.cs" />
     <Compile Include="Migrations\202001040956024_initialCreate.designer.cs">
       <DependentUpon>202001040956024_initialCreate.cs</DependentUpon>

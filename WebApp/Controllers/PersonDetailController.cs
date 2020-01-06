@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,6 +14,7 @@ namespace WebApp.Controllers
     public class PersonDetailController : ApiController
     {
         private readonly IPersonDetailService _personDetailService;
+
         public PersonDetailController(IPersonDetailService personDetailService)
         {
             _personDetailService = personDetailService;

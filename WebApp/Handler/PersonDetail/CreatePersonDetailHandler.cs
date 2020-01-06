@@ -12,7 +12,7 @@ namespace WebApp.Handler.PersonDetail
 {
     public class CreatePersonDetailHandler : BaseHandler, ICommandHandler<CreatePersonDetailCommand, PersonDetailViewModel>
     {
-        public CreatePersonDetailHandler(IUnitOfWork unitOfWork
+        public CreatePersonDetailHandler(IUnitOfWorkHistoryTracking unitOfWork
           ) : base(unitOfWork)
         {
         }

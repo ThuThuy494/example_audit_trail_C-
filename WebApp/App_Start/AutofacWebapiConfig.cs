@@ -40,7 +40,7 @@ namespace WebApp.App_Start
                .OnPreparing(p => p.Parameters = p.Parameters.Concat(new[] { new NamedParameter("container", null) }))
                .InstancePerLifetimeScope();
 
-            builder.RegisterType<UnitOfWorkEFPlus>().As<IUnitOfWorkEFPlus>()
+            builder.RegisterType<UnitOfWorkHistoryTracking>().As<IUnitOfWorkHistoryTracking>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())

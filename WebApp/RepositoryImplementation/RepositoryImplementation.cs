@@ -5,12 +5,13 @@ using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Reflection;
+using WebApp.HistoryTracking;
 using WebApp.Infrastructure;
 using WebApp.Model.Entity;
 
-namespace WebApp.HistoryTracking
+namespace WebApp.RepositoryImplementation
 {
-    public class RepositoryImplementation: RepositoryBaseImplementation
+    public class RepositoryImplementation : RepositoryBaseImplementation
     {
         private readonly IUnitOfWork _unitOfWork;
         public RepositoryImplementation(IUnitOfWork unitOfWork)
@@ -192,13 +193,18 @@ namespace WebApp.HistoryTracking
             //var recordId = ((EntityBase)obj).Id;
             var objectName = obj.ObjectName;
 
+            var userId = Guid.Parse("98e83503-936e-4ebb-9a61-4cb2b2adbc95");//guid system
             var historyTracking = new HistoryTrackingAudit
             {
                 Id = Guid.NewGuid(),
                 RecordId = Guid.NewGuid(),
                 RecordType = recordType,
                 ObjectName = objectName ?? string.Empty,
-                SubObjectName = subObjectName
+                SubObjectName = subObjectName,
+                InsertedById = userId,
+                InsertedAt = DateTime.Now,
+                UpdatedById = userId,
+                UpdatedAt = DateTime.Now,
             };
             if (!string.IsNullOrEmpty(historyTracking.ObjectName))
             {
@@ -210,13 +216,19 @@ namespace WebApp.HistoryTracking
 
         private bool LogHistoryTrackingValue(Guid historyTrackingId, string fieldName, string oldValue, string newValue, string action)
         {
+            var userId = Guid.Parse("98e83503-936e-4ebb-9a61-4cb2b2adbc95");//guid system
             var historyTrackingValue = new HistoryTrackingValueAudit
             {
+                Id = Guid.NewGuid(),
                 HistoryTrackingId = historyTrackingId,
                 ColumnName = fieldName,
                 OldValue = oldValue,
                 NewValue = newValue,
-                Action = action
+                Action = action,
+                InsertedById = userId,
+                InsertedAt = DateTime.Now,
+                UpdatedById = userId,
+                UpdatedAt = DateTime.Now,
             };
             _unitOfWork.HistoryTrackingValueAuditRepository.Add(historyTrackingValue);
             return true;

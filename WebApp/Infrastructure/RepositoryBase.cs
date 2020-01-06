@@ -18,15 +18,13 @@ namespace WebApp.Infrastructure
     {
         protected readonly TC DataContext;
         public readonly DbSet<T> Dbset;
-        public readonly IComponentContext componentContext;
 
-        private const string RepositoryCustomImplementation = "AuditTrail_Console.HistoryTracking";
+        private const string RepositoryCustomImplementation = "WebApp.RepositoryImplementation.RepositoryImplementation";
 
         public RepositoryBase(TC context)
         {
             DataContext = context;
             Dbset = context.Set<T>();
-            DataContext.Container = componentContext;
             context.LogHistoryTrackerEvent = LogHistoryTrackerEvent;
         }
         public void Add(T entity)
@@ -116,7 +114,6 @@ namespace WebApp.Infrastructure
         {
             var baseImplementation = ResolveRepositoryBaseImplementation();
             if (baseImplementation == null) return;
-            var a = componentContext.Resolve<RepositoryBaseImplementation>();
             var entities = changedEntities.Where(w => ObjectContext.GetObjectType(w.Entity.GetType()).GetInterfaces().Contains(typeof(IHistoryTracker)));
 
             foreach (var entity in entities)
@@ -139,9 +136,9 @@ namespace WebApp.Infrastructure
         /// <returns></returns>
         private RepositoryBaseImplementation ResolveRepositoryBaseImplementation()
         {
-            if (DataContext.Container == null || !DataContext.Container.IsRegisteredWithKey<RepositoryBaseImplementation>("WebApp.HistoryTracking"))
+            if (DataContext.Container == null || !DataContext.Container.IsRegisteredWithKey<RepositoryBaseImplementation>(RepositoryCustomImplementation))
                 return null;
-            return DataContext.Container.ResolveNamed<RepositoryBaseImplementation>("WebApp.HistoryTracking");
+            return DataContext.Container.ResolveNamed<RepositoryBaseImplementation>(RepositoryCustomImplementation);
         }
     }
 }

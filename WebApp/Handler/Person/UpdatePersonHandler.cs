@@ -12,7 +12,7 @@ namespace WebApp.Handler.Person
 {
     public class UpdatePersonHandler : BaseHandler, ICommandHandler<UpdatePersonCommand, PersonViewModel>
     {
-        public UpdatePersonHandler(IUnitOfWork unitOfWork
+        public UpdatePersonHandler(IUnitOfWorkHistoryTracking unitOfWork
           ) : base(unitOfWork)
         {
         }

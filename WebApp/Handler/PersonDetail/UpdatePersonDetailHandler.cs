@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,9 +13,12 @@ namespace WebApp.Handler.PersonDetail
 {
     public class UpdatePersonDetailHandler : BaseHandler, ICommandHandler<UpdatePersonDetailCommand, PersonDetailViewModel>
     {
-        public UpdatePersonDetailHandler(IUnitOfWork unitOfWork
+        private readonly IComponentContext _componentContext;
+        public UpdatePersonDetailHandler(IUnitOfWorkHistoryTracking unitOfWork, IComponentContext container
           ) : base(unitOfWork)
         {
+            _componentContext = container;
+
         }
 
         public PersonDetailViewModel Execute(UpdatePersonDetailCommand request)

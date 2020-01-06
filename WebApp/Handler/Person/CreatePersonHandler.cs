@@ -9,7 +9,7 @@ namespace WebApp.Handler.Person
 {
     public class CreatePersonHandler : BaseHandler, ICommandHandler<CreatePersonCommand, PersonViewModel>
     {
-        public CreatePersonHandler(IUnitOfWork unitOfWork
+        public CreatePersonHandler(IUnitOfWorkHistoryTracking unitOfWork
            ) : base(unitOfWork)
         {
         }
