@@ -110,7 +110,6 @@ D:\Demo\DemoApp\example_audit_trail_C-\WebApp\bin\System.Web.Http.Cors.dll
 D:\Demo\DemoApp\example_audit_trail_C-\WebApp\bin\Autofac.Integration.WebApi.pdb
 D:\Demo\DemoApp\example_audit_trail_C-\WebApp\bin\Autofac.Integration.WebApi.xml
 D:\Demo\DemoApp\example_audit_trail_C-\WebApp\bin\System.Web.Http.Cors.xml
-D:\Demo\DemoApp\example_audit_trail_C-\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 G:\Demo\AuditTrail_Console\WebApp\obj\Debug\WebApp.Migrations.initialCreate.resources
 G:\Demo\AuditTrail_Console\WebApp\obj\Debug\WebApp.csproj.GenerateResource.cache
 G:\Demo\AuditTrail_Console\WebApp\bin\WebApp.dll.config
@@ -224,3 +223,4 @@ G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\System.Xml.XPath.XDocument.dll
 G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\vbc.exe
 G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\VBCSCompiler.exe
 G:\Demo\AuditTrail_Console\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
+D:\Demo\DemoApp\example_audit_trail_C-\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache

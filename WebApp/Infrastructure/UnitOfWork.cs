@@ -17,9 +17,9 @@ namespace WebApp.Infrastructure
     {
         private readonly AuditTrailDbContext _dbContext;
 
-        public UnitOfWork(IComponentContext container)
+        public UnitOfWork(IComponentContext container, AuditTrailDbContext dbContext)
         {
-            _dbContext = new AuditTrailDbContext();
+            _dbContext = dbContext;
             _dbContext.Container = container;
         }
         public IAuditTrailDbContext DataContext
@@ -27,69 +27,63 @@ namespace WebApp.Infrastructure
             get { return _dbContext; }
         }
 
-        private IRepository<Person> _personRepo;
+        private Repository<Person> _personRepo;
         public IRepository<Person> PersonRepository
         {
             get
             {
-                if (_personRepo == null)
-                    _personRepo = new Repository<Person>(_dbContext, _dbContext.Container);
-                return _personRepo;
+                return _personRepo ??
+                         (_personRepo = new Repository<Person>(_dbContext)); ;
             }
         }
 
-        private IRepository<PersonDetail> _personRoleRepo;
+        private Repository<PersonDetail> _personRoleRepo;
         public IRepository<PersonDetail> PersonRoleRepository
         {
             get
             {
-                if (_personRoleRepo == null)
-                    _personRoleRepo = new Repository<PersonDetail>(_dbContext, _dbContext.Container);
-                return _personRoleRepo;
+                return _personRoleRepo ??
+                        (_personRoleRepo = new Repository<PersonDetail>(_dbContext));
             }
         }
 
-        private IRepository<AuditEntry> _auditEntryRepo;
+        private Repository<AuditEntry> _auditEntryRepo;
         public IRepository<AuditEntry> AuditEntryRepository
         {
             get
             {
-                if (_auditEntryRepo == null)
-                    _auditEntryRepo = new Repository<AuditEntry>(_dbContext, _dbContext.Container);
-                return _auditEntryRepo;
+                return _auditEntryRepo ??
+                        (_auditEntryRepo = new Repository<AuditEntry>(_dbContext));
             }
         }
 
-        private IRepository<AuditEntryProperty> _auditEntryPropertyRepo;
+        private Repository<AuditEntryProperty> _auditEntryPropertyRepo;
         public IRepository<AuditEntryProperty> AuditEntryPropertyRepository
         {
             get
             {
-                if (_auditEntryPropertyRepo == null)
-                    _auditEntryPropertyRepo = new Repository<AuditEntryProperty>(_dbContext, _dbContext.Container);
-                return _auditEntryPropertyRepo;
+                return _auditEntryPropertyRepo ??
+                         (_auditEntryPropertyRepo = new Repository<AuditEntryProperty>(_dbContext));
             }
         }
 
-        private IRepository<HistoryTrackingAudit> _historyTrackingAuditRepo;
+        private Repository<HistoryTrackingAudit> _historyTrackingAuditRepo;
         public IRepository<HistoryTrackingAudit> HistoryTrackingAuditRepository
         {
             get
             {
-                if (_historyTrackingAuditRepo == null)
-                    _historyTrackingAuditRepo = new Repository<HistoryTrackingAudit>(_dbContext, _dbContext.Container);
-                return _historyTrackingAuditRepo;
+                return _historyTrackingAuditRepo ??
+                          (_historyTrackingAuditRepo = new Repository<HistoryTrackingAudit>(_dbContext));
             }
         }
 
-        private IRepository<HistoryTrackingValueAudit> _historyTrackingValueAuditRepo;
+        private Repository<HistoryTrackingValueAudit> _historyTrackingValueAuditRepo;
         public IRepository<HistoryTrackingValueAudit> HistoryTrackingValueAuditRepository
         {
             get
             {
-                if (_historyTrackingValueAuditRepo == null)
-                    _historyTrackingValueAuditRepo = new Repository<HistoryTrackingValueAudit>(_dbContext, _dbContext.Container);
-                return _historyTrackingValueAuditRepo;
+                return _historyTrackingValueAuditRepo ??
+                         (_historyTrackingValueAuditRepo = new Repository<HistoryTrackingValueAudit>(_dbContext));
             }
         }
 
@@ -107,20 +101,6 @@ namespace WebApp.Infrastructure
         {
             try
             {
-                var entries = _dbContext.ChangeTracker.Entries();
-                foreach (var e in entries)
-                {
-                    var entity = e.Entity;
-                    switch (e.State)
-                    {
-                        case EntityState.Added:
-                            Console.WriteLine("==== State Add ====");
-                            break;
-                        case EntityState.Modified:
-                            Console.WriteLine("==== State Modified ====");
-                            break;
-                    }
-                }
                 SaveChangeDetail();
                 return _dbContext.SaveChanges();
             }
@@ -134,20 +114,6 @@ namespace WebApp.Infrastructure
         {
             try
             {
-                var entries = _dbContext.ChangeTracker.Entries();
-                foreach (var e in entries)
-                {
-                    var entity = e.Entity;
-                    switch (e.State)
-                    {
-                        case EntityState.Added:
-                            Console.WriteLine("==== State Add ====");
-                            break;
-                        case EntityState.Modified:
-                            Console.WriteLine("==== State Modified ====");
-                            break;
-                    }
-                }
                 SaveChangeDetail();
                 return _dbContext.SaveChangesAsync();
             }
@@ -162,43 +128,27 @@ namespace WebApp.Infrastructure
             _dbContext.Configuration.AutoDetectChangesEnabled = value;
         }
 
-        private List<DbEntityEntry> SaveChangeDetail()
+        private void SaveChangeDetail()
         {
-            var changedEntities = _dbContext.ChangeTracker.Entries().ToList();
-            // Maybe clear cache for unchanged entites I don't filter unchange
-            //if (TableUpdatedEvent != null) TableUpdatedEvent(changedEntities);
-            // NO need log history, delete workflow for unchange entities
-            changedEntities = changedEntities.Where(t => t.State != EntityState.Unchanged).ToList();
-
-            LogHistoryTrackerEvent(changedEntities);
-            return changedEntities;
-        }
-
-        private void LogHistoryTrackerEvent(IEnumerable<DbEntityEntry> changedEntities)
-        {
-            var baseImplementation = ResolveRepositoryBaseImplementation();
-            if (baseImplementation == null) return;
-
-            var entities = changedEntities.Where(w => ObjectContext.GetObjectType(w.Entity.GetType()).GetInterfaces().Contains(typeof(IHistoryTracker)));
-
-            foreach (var entity in entities)
+            var entries = _dbContext.ChangeTracker.Entries();
+            foreach (var e in entries)
             {
-                baseImplementation.LogHistoryTracking(entity);
-            }
-
-            var dynamicEntites = changedEntities.Where(w => ObjectContext.GetObjectType(w.Entity.GetType()).GetInterfaces().Contains(typeof(IDynamicHistoryTracker)));
-
-            foreach (var entity in dynamicEntites)
-            {
-                baseImplementation.LogDynamicHistoryTracking(entity);
+                var entity = e.Entity;
+                switch (e.State)
+                {
+                    case EntityState.Added:
+                        Console.WriteLine("==== State Add ====");
+                        break;
+                    case EntityState.Modified:
+                        Console.WriteLine("==== State Modified ====");
+                        break;
+                }
             }
         }
-        private RepositoryBaseImplementation ResolveRepositoryBaseImplementation()
-        {
-            if (_dbContext.Container == null || !_dbContext.Container.IsRegisteredWithKey<RepositoryBaseImplementation>("WebApp.HistoryTracking"))
-                return null;
-            return _dbContext.Container.ResolveNamed<RepositoryBaseImplementation>("WebApp.HistoryTracking");
-        }
 
+        //public IRepository<T> Repository<T>()
+        //{
+        //    return new Repository<T>(_dbContext);
+        //}
     }
 }

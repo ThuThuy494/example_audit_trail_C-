@@ -481,13 +481,19 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:WebApp.Controllers.PersonDetailController.Get">
+            <summary>
+            this is example
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WebApp.Controllers.ValuesController.Get">
             <summary>
             this is example
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApp.Infrastructure.Repository`1.ResolveRepositoryBaseImplementation">
+        <member name="M:WebApp.Infrastructure.RepositoryBase`2.ResolveRepositoryBaseImplementation">
             <summary>
             Resolves the repository base implementation.
             </summary>

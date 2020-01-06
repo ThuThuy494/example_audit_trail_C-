@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
 using WebApp.Command;
+using WebApp.Command.Person;
 using WebApp.Domain;
 
 namespace WebApp.Controllers
@@ -14,10 +15,10 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        [Route("v1/Create")]
+        [Route("v1/createPerson")]
         //[SwaggerOperation("CreateOPUAAPs")]
         //[SwaggerResponse(200, type: typeof(OPUAAPViewModel))]
-        public async Task<IHttpActionResult> CreateOPUAAPs([FromBody] PersonCommand body)
+        public async Task<IHttpActionResult> Create([FromBody] CreatePersonCommand body)
         {
             if (body == null)
             {
@@ -25,6 +26,22 @@ namespace WebApp.Controllers
             }
 
             var oPUAAP = _personService.CreateAsync(body);
+
+            return Ok(oPUAAP);
+        }
+
+        [HttpPost]
+        [Route("v1/updatePerson")]
+        //[SwaggerOperation("CreateOPUAAPs")]
+        //[SwaggerResponse(200, type: typeof(OPUAAPViewModel))]
+        public async Task<IHttpActionResult> Update([FromBody] UpdatePersonCommand body)
+        {
+            if (body == null)
+            {
+                return BadRequest("Unable to parse body, please ensure the format is correct.");
+            }
+
+            var oPUAAP = _personService.UpdateAsync(body);
 
             return Ok(oPUAAP);
         }

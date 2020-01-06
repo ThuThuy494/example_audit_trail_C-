@@ -9,6 +9,7 @@ using WebApp.Domain;
 using WebApp.Domain.Imp;
 using WebApp.HistoryTracking;
 using WebApp.Infrastructure;
+using WebApp.Model;
 
 namespace WebApp.App_Start
 {
@@ -33,6 +34,14 @@ namespace WebApp.App_Start
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());  //Register your Web API controllers.
 
             builder.RegisterType<ApiCommandProcessor>().As<ICommandProcessor>().InstancePerRequest();
+            builder.RegisterType<AuditTrailDbContext>().AsSelf().InstancePerLifetimeScope();
+            //History
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>()
+               .OnPreparing(p => p.Parameters = p.Parameters.Concat(new[] { new NamedParameter("container", null) }))
+               .InstancePerLifetimeScope();
+
+            builder.RegisterType<UnitOfWorkEFPlus>().As<IUnitOfWorkEFPlus>()
+                .InstancePerLifetimeScope();
 
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
               .Where(a =>
@@ -47,17 +56,13 @@ namespace WebApp.App_Start
                 .Keyed(k => k.FullName, typeof(RepositoryBaseImplementation))
                 .InstancePerRequest();
             //IComponentContext componentContext
-            //History
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>()
-               .OnPreparing(p => p.Parameters = p.Parameters.Concat(new[] { new NamedParameter("container", null) }))
-               .InstancePerLifetimeScope();
-
-            builder.RegisterType<UnitOfWorkEFPlus>().As<IUnitOfWorkEFPlus>()
-                .InstancePerLifetimeScope();
+            
 
             //repo
             builder.RegisterType<PersonService>().As<IPersonService>()
                 .InstancePerLifetimeScope();
+            builder.RegisterType<PersonDetailService>().As<IPersonDetailService>()
+               .InstancePerLifetimeScope();
             Container = builder.Build();
 
             return Container;

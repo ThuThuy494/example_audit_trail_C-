@@ -1,12 +1,14 @@
 ﻿using System.Threading.Tasks;
 using WebApp.Command;
+using WebApp.Command.Person;
+using WebApp.ViewModel;
 
 namespace WebApp.Domain
 {
     public interface IPersonService
     {
-        Task<bool> CreateAsync(PersonCommand model);
-        Task<bool> UpdateAsync(PersonCommand model);
+        Task<PersonViewModel> CreateAsync(CreatePersonCommand model);
+        Task<PersonViewModel> UpdateAsync(UpdatePersonCommand model);
 
     }
 }
