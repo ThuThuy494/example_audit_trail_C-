@@ -184,7 +184,6 @@ G:\Demo\AuditTrail_Console\WebApp\bin\Microsoft.CodeDom.Providers.DotNetCompiler
 G:\Demo\AuditTrail_Console\WebApp\obj\Debug\WebApp.csproj.CopyComplete
 G:\Demo\AuditTrail_Console\WebApp\obj\Debug\WebApp.dll
 G:\Demo\AuditTrail_Console\WebApp\obj\Debug\WebApp.pdb
-G:\Demo\AuditTrail_Console\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\csc.exe
 G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\csi.exe
 G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -224,3 +223,4 @@ G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\System.Xml.XPath.dll
 G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\System.Xml.XPath.XDocument.dll
 G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\vbc.exe
 G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\VBCSCompiler.exe
+G:\Demo\AuditTrail_Console\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache

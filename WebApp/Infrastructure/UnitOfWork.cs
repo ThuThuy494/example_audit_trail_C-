@@ -107,33 +107,7 @@ namespace WebApp.Infrastructure
         {
             try
             {
-                //var entries = SaveChangeDetail();
-                //foreach (var e in entries)
-                //{
-                //    var entity = e.Entity;
-                //    switch (e.State)
-                //    {
-                //        case EntityState.Added:
-                //            Console.WriteLine("==== State Add ====");
-                //            break;
-                //        case EntityState.Modified:
-                //            Console.WriteLine("==== State Modified ====");
-                //            break;
-                //    }
-                //}
-                return _dbContext.SaveChanges();
-            }
-            catch (DbEntityValidationException e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-
-        public Task<int> SaveChangesAsync()
-        {
-            try
-            {
-                var entries = SaveChangeDetail();
+                var entries = _dbContext.ChangeTracker.Entries();
                 foreach (var e in entries)
                 {
                     var entity = e.Entity;
@@ -147,6 +121,34 @@ namespace WebApp.Infrastructure
                             break;
                     }
                 }
+                SaveChangeDetail();
+                return _dbContext.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public Task<int> SaveChangesAsync()
+        {
+            try
+            {
+                var entries = _dbContext.ChangeTracker.Entries();
+                foreach (var e in entries)
+                {
+                    var entity = e.Entity;
+                    switch (e.State)
+                    {
+                        case EntityState.Added:
+                            Console.WriteLine("==== State Add ====");
+                            break;
+                        case EntityState.Modified:
+                            Console.WriteLine("==== State Modified ====");
+                            break;
+                    }
+                }
+                SaveChangeDetail();
                 return _dbContext.SaveChangesAsync();
             }
             catch (DbEntityValidationException e)

@@ -1,9 +1,12 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Web.Http;
+using WebApp.Core;
 using WebApp.Domain;
+using WebApp.Domain.Imp;
 using WebApp.HistoryTracking;
 using WebApp.Infrastructure;
 
@@ -15,7 +18,8 @@ namespace WebApp.App_Start
 
         public static void Initialize(HttpConfiguration config)
         {
-            Initialize(config, RegisterServices(new ContainerBuilder()));
+            var container = RegisterServices(new ContainerBuilder());
+            Initialize(config, container);
         }
 
 
@@ -27,6 +31,16 @@ namespace WebApp.App_Start
         private static IContainer RegisterServices(ContainerBuilder builder)
         {
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());  //Register your Web API controllers.
+
+            builder.RegisterType<ApiCommandProcessor>().As<ICommandProcessor>().InstancePerRequest();
+
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+              .Where(a =>
+                  a.FullName.StartsWith("WebApp.Handler")
+              )
+              .AsImplementedInterfaces()
+              .InstancePerRequest();
+
             //Register your Web API controllers.  
             builder.RegisterAssemblyTypes(Assembly.Load("WebApp"))
                 .As(typeof(RepositoryBaseImplementation))
@@ -44,8 +58,6 @@ namespace WebApp.App_Start
             //repo
             builder.RegisterType<PersonService>().As<IPersonService>()
                 .InstancePerLifetimeScope();
-
-            //Set the dependency resolver to be Autofac.  
             Container = builder.Build();
 
             return Container;

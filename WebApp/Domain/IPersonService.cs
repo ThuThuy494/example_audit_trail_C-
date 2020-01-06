@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using WebApp.ViewModel;
+﻿using System.Threading.Tasks;
+using WebApp.Command;
 
 namespace WebApp.Domain
 {
     public interface IPersonService
     {
-        bool Create(PersonModel model);
-        bool Update(PersonModel model);
+        Task<bool> CreateAsync(PersonCommand model);
+        Task<bool> UpdateAsync(PersonCommand model);
 
     }
 }
