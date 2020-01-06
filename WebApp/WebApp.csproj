@@ -205,13 +205,16 @@
     <Compile Include="Controllers\PersonDetailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\PersonDetailEntityPlusController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Core\ApiCommandProcessor.cs" />
     <Compile Include="Core\ICommand.cs" />
     <Compile Include="Core\ICommandHandler.cs" />
     <Compile Include="Core\ICommandProcessor.cs" />
     <Compile Include="Domain\Imp\BaseService.cs" />
+    <Compile Include="Domain\Imp\PersonDetailPlusService.cs" />
     <Compile Include="Domain\Imp\PersonDetailService.cs" />
+    <Compile Include="Domain\IPersonDetailPlusService.cs" />
     <Compile Include="Domain\IPersonDetailService.cs" />
     <Compile Include="Domain\IPersonService.cs" />
     <Compile Include="Domain\Imp\PersonService.cs" />
@@ -221,6 +224,7 @@
     </Compile>
     <Compile Include="Handler\BaseHandler.cs" />
     <Compile Include="Handler\PersonDetail\CreatePersonDetailHandler.cs" />
+    <Compile Include="Handler\PersonDetail\UpdatePersonPlusDetailHandler.cs" />
     <Compile Include="Handler\PersonDetail\UpdatePersonDetailHandler.cs" />
     <Compile Include="Handler\Person\CreatePersonHandler.cs" />
     <Compile Include="Handler\Person\UpdatePersonHandler.cs" />

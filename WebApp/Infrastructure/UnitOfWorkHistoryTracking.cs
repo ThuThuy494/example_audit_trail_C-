@@ -128,33 +128,20 @@ namespace WebApp.Infrastructure
 
         private void SaveChangeDetail()
         {
-
-            var audit = new Audit();
-            audit.PreSaveChanges(_dbContext);
-            // Access to all auditing information
-            var entries = audit.Entries;
+            var entries = _dbContext.ChangeTracker.Entries();
             foreach (var e in entries)
             {
                 var entity = e.Entity;
                 switch (e.State)
                 {
-                    case AuditEntryState.EntityAdded:
-                        Console.WriteLine("==== State Add EF Plus ====");
+                    case EntityState.Added:
+                        Console.WriteLine("==== State Add ====");
                         break;
-                    case AuditEntryState.EntityModified:
-                        Console.WriteLine("==== State Modified EF Plus ====");
+                    case EntityState.Modified:
+                        Console.WriteLine("==== State Modified ====");
                         break;
                 }
             }
-
-            //var rowAffecteds = _dbContext.SaveChanges();
-            audit.PostSaveChanges();
-
-            if (audit.Configuration.AutoSavePreAction != null)
-            {
-                audit.Configuration.AutoSavePreAction(_dbContext, audit);
-            }
-
         }
     }
 }

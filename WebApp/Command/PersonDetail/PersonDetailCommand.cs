@@ -17,4 +17,16 @@ namespace WebApp.Command.PersonDetail
         public Guid PersonId { get; set; } // PersonId (length: 150)
         public string RoleName { get; set; } // RoleName (length: 150)
     }
+
+    public class UpdatePersonPlusDetailCommand : ICommand
+    {
+        public Guid Id { get; set; } // Id (Primary key)
+        public Guid PersonId { get; set; } // PersonId (length: 150)
+        public string RoleName { get; set; } // RoleName (length: 150)
+    }
+    public class CreatePersonPlusDetailCommand : ICommand
+    {
+        public Guid PersonId { get; set; } // PersonId (length: 150)
+        public string RoleName { get; set; } // RoleName (length: 150)
+    }
 }

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using WebApp.HistoryTracking;
 using WebApp.Model;
 using WebApp.Model.Entity;
+using Z.EntityFramework.Plus;
+using AuditEntry = WebApp.Model.Entity.AuditEntry;
+using AuditEntryProperty = WebApp.Model.Entity.AuditEntryProperty;
 
 namespace WebApp.Infrastructure
 {
@@ -130,19 +133,30 @@ namespace WebApp.Infrastructure
 
         private void SaveChangeDetail()
         {
-            var entries = _dbContext.ChangeTracker.Entries();
+            var audit = new Audit();
+            audit.PreSaveChanges(_dbContext);
+            // Access to all auditing information
+            var entries = audit.Entries;
             foreach (var e in entries)
             {
                 var entity = e.Entity;
                 switch (e.State)
                 {
-                    case EntityState.Added:
-                        Console.WriteLine("==== State Add ====");
+                    case AuditEntryState.EntityAdded:
+                        Console.WriteLine("==== State Add EF Plus ====");
                         break;
-                    case EntityState.Modified:
-                        Console.WriteLine("==== State Modified ====");
+                    case AuditEntryState.EntityModified:
+                        Console.WriteLine("==== State Modified EF Plus ====");
                         break;
                 }
+            }
+
+            //var rowAffecteds = _dbContext.SaveChanges();
+            audit.PostSaveChanges();
+
+            if (audit.Configuration.AutoSavePreAction != null)
+            {
+                audit.Configuration.AutoSavePreAction(_dbContext, audit);
             }
         }
 

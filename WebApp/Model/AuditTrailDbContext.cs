@@ -13,6 +13,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WebApp.Model.Entity;
+using Z.EntityFramework.Plus;
+using AuditEntry = WebApp.Model.Entity.AuditEntry;
+using AuditEntryProperty = WebApp.Model.Entity.AuditEntryProperty;
 
 namespace WebApp.Model
 {
@@ -34,6 +37,13 @@ namespace WebApp.Model
         static AuditTrailDbContext()
         {
             System.Data.Entity.Database.SetInitializer<AuditTrailDbContext>(null);
+            System.Data.Entity.Database.SetInitializer<AuditTrailEFPlusDbContext>(null);
+            AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) =>
+            {
+                // ADD "Where(x => x.AuditEntryID == 0)" to allow multiple SaveChanges with same Audit
+                var customAuditEntries = audit.Entries.Select(x => Import(x));
+                (context as AuditTrailDbContext).AuditEntries.AddRange(customAuditEntries);
+            };
         }
 
         /// <inheritdoc />
@@ -135,6 +145,40 @@ namespace WebApp.Model
             changedEntities = changedEntities.Where(t => t.State != EntityState.Unchanged).ToList();
 
             if (LogHistoryTrackerEvent != null) LogHistoryTrackerEvent(changedEntities);
+        }
+
+        public static Entity.AuditEntry Import(Z.EntityFramework.Plus.AuditEntry entry)
+        {
+            var customAuditEntry = new Entity.AuditEntry
+            {
+                EntitySetName = entry.EntitySetName,
+                EntityTypeName = entry.EntityTypeName,
+                State = (int)entry.State,
+                StateName = entry.StateName,
+                CreatedBy = entry.CreatedBy,
+                CreatedDate = entry.CreatedDate,
+                UpdateDate = entry.CreatedDate
+            };
+
+            customAuditEntry.AuditEntryProperties = entry.Properties.Select(x => Import(x)).ToList();
+
+            return customAuditEntry;
+        }
+
+        public static Entity.AuditEntryProperty Import(Z.EntityFramework.Plus.AuditEntryProperty property)
+        {
+            var customAuditEntry = new Entity.AuditEntryProperty
+            {
+                RelationName = property.RelationName,
+                PropertyName = property.PropertyName,
+                OldValue = property.OldValueFormatted,
+                NewValue = property.NewValueFormatted,
+                AuditEntryId = property.AuditEntryID,
+                CreatedDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+            };
+
+            return customAuditEntry;
         }
     }
 }
