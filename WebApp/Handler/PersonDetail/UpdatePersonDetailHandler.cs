@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -28,6 +29,13 @@ namespace WebApp.Handler.PersonDetail
 
         public async Task<PersonDetailViewModel> ExecuteAsync(UpdatePersonDetailCommand request)
         {
+            var model = new PersonDetailViewModel();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            model.TimeStart = DateTime.Now;
+
+            //To do
             var personDetail = unitOfWork.PersonRoleRepository.GetById(request.Id);
             if (personDetail == null) return null;
 
@@ -38,13 +46,19 @@ namespace WebApp.Handler.PersonDetail
             unitOfWork.PersonRoleRepository.Update(personDetail);
 
             unitOfWork.SaveChanges();
-            return new PersonDetailViewModel()
-            {
-                PersonId = personDetail.PersonId,
-                RoleName = personDetail.RoleName,
-                CreatedDate = personDetail.CreatedDate,
-                UpdateDate = personDetail.UpdateDate
-            };
+            //To do
+            stopwatch.Stop();
+            TimeSpan timeSpan = stopwatch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds / 10);
+
+            model.PersonId = personDetail.PersonId;
+            model.RoleName = personDetail.RoleName;
+            model.CreatedDate = personDetail.CreatedDate;
+            model.UpdateDate = personDetail.UpdateDate;
+            model.TimeRun = elapsedTime;
+
+            return model;
         }
     }
 }
