@@ -25,9 +25,9 @@ namespace WebApp.Controllers
                 return BadRequest("Unable to parse body, please ensure the format is correct.");
             }
 
-            var oPUAAP = _personService.CreateAsync(body);
+            var data = _personService.CreateAsync(body);
 
-            return Ok(oPUAAP);
+            return Ok(data);
         }
 
         [HttpPost]
@@ -41,9 +41,9 @@ namespace WebApp.Controllers
                 return BadRequest("Unable to parse body, please ensure the format is correct.");
             }
 
-            var oPUAAP = _personService.UpdateAsync(body);
+            var data = _personService.UpdateAsync(body);
 
-            return Ok(oPUAAP);
+            return Ok(data);
         }
     }
 }

@@ -65,6 +65,8 @@ namespace WebApp.App_Start
                .InstancePerLifetimeScope();
             builder.RegisterType<PersonDetailPlusService>().As<IPersonDetailPlusService>()
               .InstancePerLifetimeScope();
+            builder.RegisterType<CategoryService>().As<ICategoryService>()
+            .InstancePerLifetimeScope();
             Container = builder.Build();
 
             return Container;

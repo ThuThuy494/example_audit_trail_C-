@@ -90,6 +90,16 @@ namespace WebApp.Infrastructure
             }
         }
 
+        private Repository<Category> _categoryRepo;
+        public IRepository<Category> CategoryRepository
+        {
+            get
+            {
+                return _categoryRepo ??
+                         (_categoryRepo = new Repository<Category>(_dbContext));
+            }
+        }
+
         public void Dispose()
         {
             _dbContext.Dispose();

@@ -201,7 +201,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Command\Category\CategoryCommand.cs" />
     <Compile Include="Command\PersonDetail\PersonDetailCommand.cs" />
+    <Compile Include="Controllers\CategoryEntityPlusController.cs" />
     <Compile Include="Controllers\PersonDetailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
@@ -211,7 +213,9 @@
     <Compile Include="Core\ICommand.cs" />
     <Compile Include="Core\ICommandHandler.cs" />
     <Compile Include="Core\ICommandProcessor.cs" />
+    <Compile Include="Domain\ICategoryService.cs" />
     <Compile Include="Domain\Imp\BaseService.cs" />
+    <Compile Include="Domain\Imp\CategoryService.cs" />
     <Compile Include="Domain\Imp\PersonDetailPlusService.cs" />
     <Compile Include="Domain\Imp\PersonDetailService.cs" />
     <Compile Include="Domain\IPersonDetailPlusService.cs" />
@@ -223,6 +227,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handler\BaseHandler.cs" />
+    <Compile Include="Handler\Category\CreateCategoryEntityPlusHandler.cs" />
+    <Compile Include="Handler\Category\UpdateCategoryEntityPlusHandler.cs" />
     <Compile Include="Handler\PersonDetail\CreatePersonDetailHandler.cs" />
     <Compile Include="Handler\PersonDetail\UpdatePersonPlusDetailHandler.cs" />
     <Compile Include="Handler\PersonDetail\UpdatePersonDetailHandler.cs" />
@@ -274,6 +280,7 @@
     <Compile Include="Model\IAuditTrailDbContext.cs" />
     <Compile Include="Command\Person\PersonCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\PersonDetailViewModel.cs" />
     <Compile Include="ViewModel\PersonViewModel.cs" />
   </ItemGroup>

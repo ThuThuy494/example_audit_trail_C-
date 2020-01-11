@@ -11,7 +11,8 @@ namespace WebApp.Infrastructure
     public interface IUnitOfWork : IDisposable
     {
         void SetDetachChanges(bool value);
-        int SaveChanges(); Task<int> SaveChangesAsync();
+        int SaveChanges(); 
+        Task<int> SaveChangesAsync();
         //IRepository<T> Repository<T>();
         IAuditTrailDbContext DataContext { get; }
         IRepository<Person> PersonRepository { get; }
@@ -20,5 +21,6 @@ namespace WebApp.Infrastructure
         IRepository<AuditEntryProperty> AuditEntryPropertyRepository { get; }
         IRepository<HistoryTrackingAudit> HistoryTrackingAuditRepository { get; }
         IRepository<HistoryTrackingValueAudit> HistoryTrackingValueAuditRepository { get; }
+        IRepository<Category> CategoryRepository { get; }
     }
 }
