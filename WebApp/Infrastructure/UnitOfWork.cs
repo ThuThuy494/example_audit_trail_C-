@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
@@ -144,9 +145,12 @@ namespace WebApp.Infrastructure
         private void SaveChangeDetail()
         {
             var audit = new Audit();
+            audit.Configuration.IgnorePropertyUnchanged = false;
             audit.PreSaveChanges(_dbContext);
             // Access to all auditing information
             var entries = audit.Entries;
+
+
             foreach (var e in entries)
             {
                 var entity = e.Entity;

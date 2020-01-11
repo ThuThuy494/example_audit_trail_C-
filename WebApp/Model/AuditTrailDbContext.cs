@@ -39,15 +39,26 @@ namespace WebApp.Model
         {
             System.Data.Entity.Database.SetInitializer<AuditTrailDbContext>(null);
             System.Data.Entity.Database.SetInitializer<AuditTrailEFPlusDbContext>(null);
-           
+
+            AuditManager.DefaultConfiguration.Exclude(x => true);
+            AuditManager.DefaultConfiguration.IncludeDataAnnotation();
             AuditManager.DefaultConfiguration.ExcludeDataAnnotation();
             AuditManager.DefaultConfiguration.DataAnnotationDisplayName();
+
             AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) =>
             {
                 // ADD "Where(x => x.AuditEntryID == 0)" to allow multiple SaveChanges with same Audit
                 var customAuditEntries = audit.Entries.Select(x => Import(x));
                 (context as AuditTrailDbContext).AuditEntries.AddRange(customAuditEntries);
             };
+        }
+
+        private static List<string> ExcludeList
+        {
+            get
+            {
+                return new List<string> { "Id" };
+            }
         }
 
         /// <inheritdoc />
@@ -164,7 +175,9 @@ namespace WebApp.Model
                 UpdateDate = entry.CreatedDate
             };
 
-            customAuditEntry.AuditEntryProperties = entry.Properties.Select(x => Import(x)).ToList();
+            customAuditEntry.AuditEntryProperties = entry.Properties.Select(x => Import(x))
+                .Where(x => !ExcludeList.Contains(x.PropertyName))
+                .ToList();
 
             return customAuditEntry;
         }

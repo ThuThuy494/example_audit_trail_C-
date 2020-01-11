@@ -49,7 +49,8 @@ namespace WebApp.Infrastructure
         private void UpdateEntityObject(T entity)
         {
             //Dbset.Attach(entity);
-            //DataContext.Entry(entity).State = EntityState.Modified;
+            DataContext.Entry(entity).State = EntityState.Modified;
+            DataContext.Entry(entity).CurrentValues.SetValues(entity);
         }
 
         public void Delete(System.Linq.Expressions.Expression<Func<T, bool>> where, bool isHardDelete = false)
