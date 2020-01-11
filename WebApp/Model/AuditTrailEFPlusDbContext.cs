@@ -24,6 +24,7 @@ namespace WebApp.Model
         public DbSet<HistoryTrackingAudit> HistoryTrackingAudits { get; set; }
         public DbSet<HistoryTrackingValueAudit> HistoryTrackingValueAudits { get; set; }
         public DbSet<PersonDetail> PersonDetails { get; set; }
+        public DbSet<Category> CategoryDetail { get; set; }
 
         static AuditTrailEFPlusDbContext()
         {

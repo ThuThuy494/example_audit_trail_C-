@@ -233,6 +233,12 @@
     <Compile Include="HistoryTracking\IHistoryTracker.cs" />
     <Compile Include="HistoryTracking\LoggerAttribute.cs" />
     <Compile Include="HistoryTracking\RepositoryBaseImplementation.cs" />
+    <Compile Include="Migrations\202001111314597_addTableCategory.cs" />
+    <Compile Include="Migrations\202001111314597_addTableCategory.designer.cs">
+      <DependentUpon>202001111314597_addTableCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Entity\Category.cs" />
+    <Compile Include="Model\Entity\CategoryConfiguration.cs" />
     <Compile Include="RepositoryImplementation\RepositoryImplementation.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IRepositoryEFPlus.cs" />
@@ -358,6 +364,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202001040956024_initialCreate.resx">
       <DependentUpon>202001040956024_initialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001111314597_addTableCategory.resx">
+      <DependentUpon>202001111314597_addTableCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

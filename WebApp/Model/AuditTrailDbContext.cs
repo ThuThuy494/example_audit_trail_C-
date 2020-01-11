@@ -33,11 +33,15 @@ namespace WebApp.Model
         public DbSet<HistoryTrackingValueAudit> HistoryTrackingValueAudits { get; set; } // HistoryTrackingValueAudit
         public DbSet<Person> People { get; set; } // Persons
         public DbSet<PersonDetail> PeopleDetail { get; set; } // PersonDetails
+        public DbSet<Category> CategoryDetail { get; set; } // PersonDetails
 
         static AuditTrailDbContext()
         {
             System.Data.Entity.Database.SetInitializer<AuditTrailDbContext>(null);
             System.Data.Entity.Database.SetInitializer<AuditTrailEFPlusDbContext>(null);
+           
+            AuditManager.DefaultConfiguration.ExcludeDataAnnotation();
+            AuditManager.DefaultConfiguration.DataAnnotationDisplayName();
             AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) =>
             {
                 // ADD "Where(x => x.AuditEntryID == 0)" to allow multiple SaveChanges with same Audit

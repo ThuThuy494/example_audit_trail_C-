@@ -493,11 +493,35 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApp.Infrastructure.RepositoryBase`2.ResolveRepositoryBaseImplementation">
+        <member name="P:WebApp.Model.Entity.AuditEntry.AuditEntryProperties">
             <summary>
-            Resolves the repository base implementation.
+            Child AuditEntryProperties where [AuditEntryProperties].[AuditEntryID] point to this entity (FK_dbo.AuditEntryProperties_dbo.AuditEntries_AuditEntryID)
             </summary>
-            <returns></returns>
+        </member>
+        <member name="P:WebApp.Model.Entity.AuditEntryProperty.AuditEntry">
+            <summary>
+            Parent AuditEntry pointed by [AuditEntryProperties].([AuditEntryId]) (FK_dbo.AuditEntryProperties_dbo.AuditEntries_AuditEntryID)
+            </summary>
+        </member>
+        <member name="P:WebApp.Model.Entity.HistoryTrackingAudit.HistoryTrackingValueAudits">
+            <summary>
+            Child HistoryTrackingValueAudits where [HistoryTrackingValueAudit].[HistoryTrackingId] point to this entity (FK__HistoryTr__Histo__403A8C7D)
+            </summary>
+        </member>
+        <member name="P:WebApp.Model.Entity.HistoryTrackingValueAudit.HistoryTrackingAudit">
+            <summary>
+            Parent HistoryTrackingAudit pointed by [HistoryTrackingValueAudit].([HistoryTrackingId]) (FK__HistoryTr__Histo__403A8C7D)
+            </summary>
+        </member>
+        <member name="P:WebApp.Model.Entity.Person.PersonDetails">
+            <summary>
+            Child HistoryTrackingValueAudits where [HistoryTrackingValueAudit].[HistoryTrackingId] point to this entity (FK__HistoryTr__Histo__403A8C7D)
+            </summary>
+        </member>
+        <member name="P:WebApp.Model.Entity.PersonDetail.Person">
+            <summary>
+            Parent HistoryTrackingAudit pointed by [HistoryTrackingValueAudit].([HistoryTrackingId]) (FK__HistoryTr__Histo__403A8C7D)
+            </summary>
         </member>
         <member name="M:WebApp.Model.AuditTrailEFPlusDbContext.#ctor">
             <inheritdoc />
@@ -535,35 +559,11 @@
         <member name="M:WebApp.Model.AuditTrailDbContext.#ctor(System.Data.Entity.Core.Objects.ObjectContext,System.Boolean)">
             <inheritdoc />
         </member>
-        <member name="P:WebApp.Model.Entity.AuditEntry.AuditEntryProperties">
+        <member name="M:WebApp.Infrastructure.RepositoryBase`2.ResolveRepositoryBaseImplementation">
             <summary>
-            Child AuditEntryProperties where [AuditEntryProperties].[AuditEntryID] point to this entity (FK_dbo.AuditEntryProperties_dbo.AuditEntries_AuditEntryID)
+            Resolves the repository base implementation.
             </summary>
-        </member>
-        <member name="P:WebApp.Model.Entity.AuditEntryProperty.AuditEntry">
-            <summary>
-            Parent AuditEntry pointed by [AuditEntryProperties].([AuditEntryId]) (FK_dbo.AuditEntryProperties_dbo.AuditEntries_AuditEntryID)
-            </summary>
-        </member>
-        <member name="P:WebApp.Model.Entity.HistoryTrackingAudit.HistoryTrackingValueAudits">
-            <summary>
-            Child HistoryTrackingValueAudits where [HistoryTrackingValueAudit].[HistoryTrackingId] point to this entity (FK__HistoryTr__Histo__403A8C7D)
-            </summary>
-        </member>
-        <member name="P:WebApp.Model.Entity.HistoryTrackingValueAudit.HistoryTrackingAudit">
-            <summary>
-            Parent HistoryTrackingAudit pointed by [HistoryTrackingValueAudit].([HistoryTrackingId]) (FK__HistoryTr__Histo__403A8C7D)
-            </summary>
-        </member>
-        <member name="P:WebApp.Model.Entity.Person.PersonDetails">
-            <summary>
-            Child HistoryTrackingValueAudits where [HistoryTrackingValueAudit].[HistoryTrackingId] point to this entity (FK__HistoryTr__Histo__403A8C7D)
-            </summary>
-        </member>
-        <member name="P:WebApp.Model.Entity.PersonDetail.Person">
-            <summary>
-            Parent HistoryTrackingAudit pointed by [HistoryTrackingValueAudit].([HistoryTrackingId]) (FK__HistoryTr__Histo__403A8C7D)
-            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

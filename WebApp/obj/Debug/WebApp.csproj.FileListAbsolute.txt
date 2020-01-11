@@ -224,3 +224,4 @@ G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\vbc.exe
 G:\Demo\AuditTrail_Console\WebApp\bin\roslyn\VBCSCompiler.exe
 G:\Demo\AuditTrail_Console\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
 D:\Demo\DemoApp\example_audit_trail_C-\WebApp\obj\Debug\WebApp.csprojAssemblyReference.cache
+D:\Demo\DemoApp\example_audit_trail_C-\WebApp\obj\Debug\WebApp.Migrations.addTableCategory.resources
