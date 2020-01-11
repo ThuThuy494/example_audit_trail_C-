@@ -1,3 +1,5 @@
 /.vs
 /AuditTrail_Console/bin
 /AuditTrail_Console/obj
+/WebApp/obj
+/WebApp/bin

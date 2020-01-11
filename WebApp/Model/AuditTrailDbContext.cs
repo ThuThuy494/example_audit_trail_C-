@@ -53,14 +53,6 @@ namespace WebApp.Model
             };
         }
 
-        private static List<string> ExcludeList
-        {
-            get
-            {
-                return new List<string> { "Id" };
-            }
-        }
-
         /// <inheritdoc />
         public AuditTrailDbContext()
             : base("AuditTrailDbContext")
@@ -175,8 +167,12 @@ namespace WebApp.Model
                 UpdateDate = entry.CreatedDate
             };
 
+            //Auditlog not allow exclude primary.So you must add on primary key here
+            //Get Primary key of entity
+            var excludePrimaryKeys = entry.Entry.EntityKey.EntityKeyValues.Select(x => x.Key).ToList();
+
             customAuditEntry.AuditEntryProperties = entry.Properties.Select(x => Import(x))
-                .Where(x => !ExcludeList.Contains(x.PropertyName))
+                .Where(x => !excludePrimaryKeys.Contains(x.PropertyName))//exclude primary key
                 .ToList();
 
             return customAuditEntry;
